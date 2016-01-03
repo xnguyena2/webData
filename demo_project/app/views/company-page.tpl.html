@@ -1,0 +1,53 @@
+<div class="company-page col-sm-9" style="padding-left: 0px;">
+	<div class="header-company">Company</div>
+        <div class="detail-contact row">            
+                <div class="info_contact col-sm-5">
+                        <!--<button type="button" ng-click="goBackToResult()">Go Back to Result!</button>-->
+		</div>
+		<div class="edit_contact col-sm-4">
+		</div>
+        </div>
+	<div class="detail-info row">
+		<div class="info_company col-sm-7">                    
+                    <div class="name_company">
+                            {{company.NAME}}
+                    </div>
+                    <div class="add_company">
+                            {{"ADDRESS: "+company.ADDRESS+", "+company.CITY+", "+company.STATE+", "+company.COUNTRY}}
+                    </div>
+                    <div class="phone_company">
+                            {{"PHONE NUMBER: "+company.PHONE}}
+                    </div>
+                    <div class="website_company">
+                            {{"WEBSITE: "+company.URL}}
+                    </div>
+                    <div class="revenue_company">
+                            Revenue :{{company.REVENUE}}
+                    </div>
+                    <div class="employee_company">
+                            Employee : {{company.SIZE}}
+                    </div>
+                    <div class="employee_company">
+                            Industry : {{company.INDUSTRIES}}
+                    </div>
+		</div>
+		<div class="connect_company col-sm-4">
+                    <div class="company_detail">
+			<a href-void ng-click="showCompanyPage()" class="update-details">Update Company Details</a>
+		</div>
+                    <!-- Do not display this at the moment
+                    <div class="connect_company_icon">
+			<div class="label-connect">
+				Connect
+			</div>
+			<div class="icon-connect">
+				<input type="image" src="img/facebook.png">
+				<input type="image" src="img/gplus.png">
+				<input type="image" src="img/twitter.png">
+			</div>
+                    </div>
+                    -->
+		
+	</div>
+	</div>
+</div>

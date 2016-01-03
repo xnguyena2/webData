@@ -1,0 +1,207 @@
+<div class="col-sm-3" style="padding-right: 0px;">
+                    <div class="panel_search"></div>
+                        <div class="advanced_search_div">
+                            <div class="advanced_search">Advanced Search</div>
+                            <div class="search" style="padding-left: 20px;">
+                                <div style="width: 100%;margin-top: 20px;">
+                                            <span class="input-group-addon input-sm" ng-click="searchPress(0,true)" style="
+    float: left;
+    width: 13%;
+">
+                                                    <i class="glyphicon glyphicon-search"></i>
+                                            </span> 
+                                    <input ng-model="jobTitleFliter" ng-keypress="enterPress($event)" id="jobTitleFliter" type="text" class="form-control input-sm ng-pristine ng-valid" placeholder="Fliter Job Title............" aria-controls="tableExample" style="
+    float: left;
+    width: 80%;
+">
+                                    </div>
+                                <br></br>
+                                <div style="width: 100%;margin-top: 20px;">
+                                            <span class="input-group-addon input-sm" ng-click="searchPress(0,true)" style="
+    float: left;
+    width: 13%;
+">
+                                                    <i class="glyphicon glyphicon-search"></i>
+                                            </span> 
+                                    <input ng-model="companyFliter" ng-keypress="enterPress($event)" id="companyFliter" type="text" class="form-control input-sm ng-pristine ng-valid" placeholder="Fliter Company............" aria-controls="tableExample" style="
+    float: left;
+    width: 80%;
+">
+                                    </div>
+                            <label class="label_company">Job Role</label><small ng-if="!collapse_menu" class="ds-collapse" data-toggle="collapse" data-target="#job_role" ng-click="open_close(collapse_menu)" style="cursor:pointer;"> <i class="glyphicon glyphicon-minus-sign"></i>
+                            </small>
+                            <small ng-if="collapse_menu" class="ds-collapse" data-toggle="collapse" data-target="#job_role" ng-click="open_close(collapse_menu)" style="cursor:pointer;"> <i class="glyphicon glyphicon-plus-sign"></i>
+                            </small>
+                            <br/>
+                            <div class="job_role collapse on" id="job_role">
+                              <div class="col-sm-6 role_level">
+                                <div class="all_level">
+                                  <label><input type="checkbox" name="all_level" ng-model="all_levels.value" ng-disabled="all_levels.value">{{all_levels.level}}</label>
+                                </div>
+                                <div ng-repeat="(l_key,level) in job_role_levels">
+                                  <label><input type="checkbox" name="role_level" ng-model="job_role_levels[l_key].value" ng-click="checkedJobLevel()">{{level.level}}</label>
+                                </div>
+                              </div>
+                              <div class="col-sm-6 role_depart">
+                                <div class="all_depart">
+                                  <label><input type="checkbox" name="all_departs" ng-model="all_departs.value" ng-disabled="all_departs.value">{{all_departs.depart}}</label>
+                                </div>
+                                <div ng-repeat="(d_key,depart) in job_role_departments">
+                                  <label><input type="checkbox" name="role_depart" ng-model="job_role_departments[d_key].value" ng-click="checkedJobDepart()">{{depart.depart}}</label>
+                                </div>
+                              </div>
+                            </div>
+                            <label class="label_company">Industry</label>
+                            <small ng-if="!collapse_menu_industry" class="ds-collapse" data-toggle="collapse" data-target="#industry_options" ng-click="open_close_industry(collapse_menu_industry)" style="cursor:pointer;"> <i class="glyphicon glyphicon-minus-sign"></i>
+                            </small>
+                            <small ng-if="collapse_menu_industry" class="ds-collapse" data-toggle="collapse" data-target="#industry_options" ng-click="open_close_industry(collapse_menu_industry)" style="cursor:pointer;"> <i class="glyphicon glyphicon-plus-sign"></i>
+                            </small><br/>
+                            <div class="options collapse on" id="industry_options">
+                              <div class="all_industries">
+                                  <label>
+                                      <input type="checkbox" name="check_industry" ng-model="all_industries.value" ng-disabled="all_industries.value"> {{all_industries.category}}
+                                  </label>
+                              </div>
+                              <div class="industry">
+                                  <div ng-repeat="(keyParent, industry) in industries">
+                                      <div class="parent">
+                                          <label>
+                                              <span style="color:#00ADE2";
+                                              ng-class="
+                                              {'glyphicon glyphicon-triangle-bottom': industries[keyParent].parent.value || industries[keyParent].parent.collapsed,
+                                              'glyphicon glyphicon-play': !industries[keyParent].parent.value && !industries[keyParent].parent.collapsed}"></span>
+                                              <input type="checkbox" name="check_industry_parent" ng-model="industry.parent.value" ng-click="checkParent(keyParent)"> {{industry.parent.category}}
+                                          </label><br/>
+                                      </div>
+                                      <div class="subItem">
+                                          <div ng-repeat="(key,item) in industry.subItem" ng-if="(industries[keyParent].parent.value || industries[keyParent].parent.collapsed)">
+                                              <label>
+                                                  <input type="checkbox" name="{{industry.parent._id}}"  ng-model="industry.subItem[key].value" ng-click="checkSub(keyParent,key)"> {{item.category}}
+                                              </label><br/>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="left-panel">
+                                <label class="label_company">Company Revenue</label>
+                                <small ng-if="!collapse_menu_revenue" class="ds-collapse" data-toggle="collapse" data-target="#company_revenue" ng-click="open_close_revenue(collapse_menu_revenue)" style="cursor:pointer;"> <i class="glyphicon glyphicon-minus-sign"></i>
+                                </small>
+                                <small ng-if="collapse_menu_revenue" class="ds-collapse" data-toggle="collapse" data-target="#company_revenue" ng-click="open_close_revenue(collapse_menu_revenue)" style="cursor:pointer;"> <i class="glyphicon glyphicon-plus-sign"></i>
+                                </small>
+                                <br/>
+                            <div id="company_revenue" class="collapse on">
+                              <label>
+                                <input type="checkbox" ng-model="checkboxModel.all_value"> All Revenue Levels
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="check_element" ng-model="checkboxModel.level1" ng-click="checkRevenue()"> $0 - 1M
+                            </label><br/>
+                            <label>
+                                <input type="checkbox"  name="check_element" ng-model="checkboxModel.level2" ng-click="checkRevenue()"> $1 - 10M
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="check_element" ng-model="checkboxModel.level3" ng-click="checkRevenue()"> $10 - 50M
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="check_element" ng-model="checkboxModel.level4" ng-click="checkRevenue()"> $50 - 100M
+                            </label><br/>
+                            <label>
+                                <input type="checkbox" name="check_element" ng-model="checkboxModel.level5" ng-click="checkRevenue()"> $100 - 250M
+                            </label><br/>
+                            </div>
+                            </div>
+                            <div class="left-panel">
+                                <label class="label_company">Company Size</label>
+                                <small ng-if="!collapse_menu_company_size" class="ds-collapse" data-toggle="collapse" data-target="#company_size" ng-click="open_close_company_size(collapse_menu_company_size)" style="cursor:pointer;"> <i class="glyphicon glyphicon-minus-sign"></i>
+                                </small>
+                                <small ng-if="collapse_menu_company_size" class="ds-collapse" data-toggle="collapse" data-target="#company_size" ng-click="open_close_company_size(collapse_menu_company_size)" style="cursor:pointer;"> <i class="glyphicon glyphicon-plus-sign"></i>
+                                </small><br/>
+                                <div class="collapse on" id="company_size">
+                                  <label>
+                                    <input type="checkbox" ng-model="checkboxSize.all_size"> All Employee Sizes
+                                </label><br/>
+                                <label>
+                                    <input type="checkbox" ng-model="checkboxSize.size1" name="check_size" ng-click="checkSize()"> 0 - 25
+                                </label><br/>
+                                <label>
+                                    <input type="checkbox" ng-model="checkboxSize.size2" name="check_size" ng-click="checkSize()"> 25 - 100
+                                </label><br/>
+                                <label>
+                                    <input type="checkbox" ng-model="checkboxSize.size3" name="check_size" ng-click="checkSize()"> 100 - 250
+                                </label><br/>
+                                <label>
+                                    <input type="checkbox" ng-model="checkboxSize.size4" name="check_size" ng-click="checkSize()"> 250 - 1000
+                                </label><br/>
+                                <label>
+                                    <input type="checkbox" ng-model="checkboxSize.size5" name="check_size" ng-click="checkSize()"> 1k - 10k
+                                </label><br/>
+                                </div>
+                            </div>
+                            <div class="left-panel">
+                                <label class="label_company">Location</label>
+                                <small ng-if="!collapse_menu_location" class="ds-collapse" data-toggle="collapse" data-target="#location" ng-click="open_close_location(collapse_menu_location)" style="cursor:pointer;"> <i class="glyphicon glyphicon-minus-sign"></i>
+                                </small>
+                                <small ng-if="collapse_menu_location" class="ds-collapse" data-toggle="collapse" data-target="#location" ng-click="open_close_location(collapse_menu_location)" style="cursor:pointer;"> <i class="glyphicon glyphicon-plus-sign"></i>
+                                </small><br/>
+                                    <div class="collapse on" id="location">
+                                    <div class="location_code">
+                                      <div class="code">
+                                        <label style="font-weight:bold;">ZIP Code or Area Code</label></br>
+                                        <input type="text" ng-model="location_code" placeholder="zip code, city, state">
+                                      </div>
+                                  </div>
+                                  <div class="location_zip" ng-if="location_zip">
+                                    <div class="all_industries">
+                                      <label>
+                                          <input type="checkbox" name="check_country" ng-model="all_countries.value" ng-disabled="all_countries.value"> {{all_countries.category}}
+                                      </label>
+                                  </div>
+                                  <div class="industry">
+                                      <div ng-repeat="(keyParent, country) in countries">
+                                          <div class="parent">
+                                              <label>
+                                                  <span style="color:#00ADE2";
+                                                  ng-class="
+                                                  {'glyphicon glyphicon-triangle-bottom': countries[keyParent].parent.value || countries[keyParent].parent.collapsed,
+                                                  'glyphicon glyphicon-play': !countries[keyParent].parent.value && !countries[keyParent].parent.collapsed}"></span>
+                                                  <input type="checkbox" name="check_country_parent" ng-model="country.parent.value" ng-click="checkParentCountry(keyParent)"> {{country.parent.category}}
+                                              </label><br/>
+                                          </div>
+                                          <div class="subItem">
+                                              <div ng-repeat="(key,item) in country.subItem" ng-if="(countries[keyParent].parent.value || countries[keyParent].parent.collapsed)">
+                                                  <label>
+                                                      <input type="checkbox" name="{{country.parent._id}}"  ng-model="country.subItem[key].value" ng-click="checkSubCountry(keyParent,key)"> {{item.category}}
+                                                  </label><br/>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  </div>
+                                  <div class="location_area" ng-if="!location_zip">
+                                    <div class="all_industries">
+                                      <label>
+                                          <input type="checkbox" name="check_all_area" ng-model="all_area.value" ng-disabled="all_area.value"> {{all_area.category}}
+                                      </label>
+                                  </div>
+                                  <div class="subItem_area" ng-repeat="(key, item) in area">
+                                    <label>
+                                          <input type="checkbox" name="check_area" ng-model="item.value" ng-click="checkArea()"> {{item.category}}
+                                      </label>
+                                  </div>
+                                  </div>
+                          </div>
+                            </div>
+                                <div style="margin-top:20px;margin-bottom:200px;padding-bottom: 10px;" class="left-panel">
+                                    <button ng-click="resetAllSelect()" href="#" class="myButton" style="
+                                        float: left;
+                                        padding-bottom: 10px;
+                                        margin-bottom: 10px;
+                                    ">Reset</button>
+                                    <button ng-click="searchPress(0,true)" href="#" class="myButton">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>

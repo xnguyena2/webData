@@ -1,0 +1,37 @@
+<div class="company-page col-sm-9" style="padding-left: 0px;">
+	<div class="header-company">My Exports</div>
+	<div class="dt-toolbar" style="height: 43px">
+			
+		</div>
+        <table id="tableExample" class="table tbl-project-report table table-striped table-bordered table-hover" datatable-basic>
+			<thead>
+			  <tr>
+				  <th style="background-color: #8DD9F1;">Name</th>
+				  <th style="background-color: #8DD9F1;">Contact</th>
+				  <th style="background-color: #8DD9F1;"></th>
+			  </tr>
+			</thead>
+			<tbody>
+				<tr class="info-text" ng-repeat="folder in folders track by $index">
+					<td style="color: #227EA5;">{{folder.FOLDER}}</td>
+					<td style="color: #227EA5;">{{folder.COUNT}}</td>
+					<td>
+                                            <ol class="breadcrumb" style="background: transparent">
+                                                <li class="active"><a class="login-window" ng-click="getCVSFile(folder.FOLDER,folder.COUNT,0,false)">View List</a></li>
+                                                <li class="active"><a class="login-window" ng-click="getCVSFile(folder.FOLDER,folder.COUNT,-1,true)">Export</a></li>
+                                            </ol>
+                                        </td>
+			  </tr>
+			</tbody>
+		</table>
+        <div class="dt-toolbar-footer">
+			<div class="col-sm-6 col-xs-12 hidden-xs">
+				<div class="dataTables_info" id="tableExample_info" role="status" aria-live="polite"></div>
+			</div>
+			<div class="col-xs-12 col-sm-6">
+                            <div ng-show="pagingBar" class="dataTables_paginate paging_simple_numbers" id="tableExample_paginate">
+				
+                            </div>
+			</div>
+		</div>
+</div>

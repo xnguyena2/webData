@@ -1,0 +1,86 @@
+<table class="hover-table" style="
+    width: 412px;">
+    <tbody>
+        <tr>
+            <td class="hover-tl"></td>
+            <td class="hover-tm"></td>
+        </tr>
+        <tr>
+            <td class="hover-ml"></td>
+            <td class="hover-mm">
+                <div class="hover-header">
+                    <div class="hover-title">Update Contact Infomation</div>
+                </div>
+                <div class="hover-messaging"></div>
+                <div class="hover-content">
+                    <form id="quickUpdateNameForm" action="{{rootUrl+'mysite/updatecontact.php'}}" method="post">
+                        <input type="hidden" id="id" name="id" value="{{contactInfo.ID}}">
+                        <input type="hidden" id="emailuser" name="userEmail" value="{{userID}}">
+                        <div class="contact-hover-quickupdate-name">
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <th align="left" class="form-section-inputfield"><strong>First Name</strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-section-inputfield">
+                                            <input id="firstName" value="{{contactInfo.FIRSTNAME}}" name="firstName" type="text" class="form-section-inputfield-text" maxlength="128">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <th align="left" class="form-section-inputfield"><strong>Last Name</strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-section-inputfield"><input id="lastName" value="{{contactInfo.LASTNAME}}" name="lastName" type="text" class="form-section-inputfield-text" maxlength="128"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <th align="left" class="form-section-inputfield"><strong>Job Title</strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-section-inputfield">
+                                            <input id="jobTitle" value="{{contactInfo.TITLE}}" name="jobTitle" type="text" class="form-section-inputfield-text" maxlength="128">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <table style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <th align="left" class="form-section-inputfield"><strong>Email</strong></th>
+                                    </tr>
+                                    <tr>
+                                        <td class="form-section-inputfield">
+                                            <input id="email" value="{{contactInfo.EMAIL}}" name="email" type="text" class="form-section-inputfield-text" maxlength="128">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <p align="center">
+                            <button id="contactQuickUpdateNameSubmit" type="submit" class="button-standard button-primary track-click">
+                                <span class="button-standard-text">Update</span>
+                            </button>&nbsp;
+                            <button type="button" class="button-standard button-secondary track-click" id="canCelUpdate">
+                                <span class="button-standard-text">Cancel</span>
+                            </button>&nbsp;
+                        </p>                        
+                    </form>
+                    <div class="clear"></div>
+                </div>
+                <div class="clear"></div>
+            </td>
+            <td class="hover-mr"></td>
+        </tr>
+        <tr>
+            <td class="hover-bl"></td><td class="hover-bm"></td><td class="hover-br"></td>
+        </tr>
+    </tbody>
+</table>
