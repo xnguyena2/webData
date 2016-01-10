@@ -1,0 +1,85 @@
+<div class="container-fluid">
+	<div class="row">
+            <div class="col-md-2" style="background-color: #8DD9F1;">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+		</div>
+		<div class="col-md-8" style="
+    background-color: #8DD9F1;
+">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px">Company Info</div>
+		</div>
+		<div class="col-md-2" style="background-color: #8DD9F1;">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+		</div>
+	</div>
+    <div class="row" >
+        
+		<div class="col-md-2">
+		</div>
+        <div class="col-md-8" style="padding: 0px;">
+            <div class="company-info-title" style="margin-bottom: 20px;margin-top: 20px;">{{companyName}}</div>
+            <div id="basicInfo" style="border: none;" class="company-info-container ui-tabs-panel ui-widget-content ui-corner-bottom" aria-labelledby="companyBasicInfo" role="tabpanel" aria-expanded="true" aria-hidden="false">
+	   	<form id="companyInfoForm" class="form">
+                    <div class="company-info" style="border-right: none;">
+	            <table>
+	                <tbody><tr>
+	                    <td class="form-section-label">Website</td>
+	                    <td class="company-info-data"><a href="{{companyWebsite}}" target="_blank" >{{companyWebsite}}</a></td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Address</td>
+	                    <td class="company-info-data">
+	                        {{company.ADDRESS}}<br>	                        
+	                        {{company.CITY+", "+company.STATE+", "+company.ZIP}}<br>
+	                        {{company.COUNTRY}}&nbsp;
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Phone</td>
+	                    <td class="company-info-data">{{company.PHONE}}</td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Industries</td>
+	                    <td class="company-info-data">
+	                        {{company.INDUSTRIES}}
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Employees</td>
+	                    <td class="company-info-data">
+                                {{company.SIZE}}
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Revenue</td>
+	                    <td class="company-info-data">
+		                {{company.REVENUE}}
+	                    </td>
+	                </tr>
+	                <tr>
+	                    <td class="form-section-label">Ownership</td>
+	                    <td class="company-info-data">
+                                {{company.OWNERSHIP}}
+	                    </td>
+	                </tr>
+	                <tr>
+	                    
+	                </tr>
+	            </tbody></table>
+	        </div>
+	        <div class="clear"></div>
+	    </form>
+            <form id="companyInfoForm">
+                <div class="padding-bottom-20px"></div>
+                <p align="right">
+                    <button id="updateCompany" type="button" class="button-standard button-primary track-click" ng-click="showCompanyPage()">
+                        <span class="button-standard-text">Update Company</span>
+                    </button>&nbsp;
+                </p>
+            </form>
+            </div>
+        </div>
+		<div class="col-md-2">
+		</div>
+	</div>
+</div>

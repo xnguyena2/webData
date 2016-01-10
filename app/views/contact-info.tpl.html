@@ -1,0 +1,128 @@
+<!--<div class="company-page col-sm-9" style="padding-left: 0px;">
+	<div class="header-company">Contact</div>
+	<div class="detail-contact row">
+		<div class="info_contact col-sm-7">
+                        <div class="businesscard-contactinfo">
+                            <div class="businesscard-contactinfo-wrapper">
+                                <div class="businesscard-background">
+                                    <div class="businesscard-contactinfo-name">{{contactInfo.FIRSTNAME +" "+contactInfo.LASTNAME}}</div>
+                                    <div class="businesscard-contactinfo-title">{{contactInfo.TITLE}}</div>
+                                    <div class="businesscard-contactinfo-phone">
+                                        <span id="hqPhone" class="businesscard-contact-info-hqphone">{{"Phone: "+company.PHONE}}</span>
+                                    </div>
+                                    <div class="businesscard-contactinfo-phone">
+                                        <span id="hqPhone" class="businesscard-contact-info-hqphone">EMAIL: {{contactInfo.EMAIL}}</span>
+                                    </div>
+                                    <div class="businesscard-companyinfo">
+                                        <div class="businesscard-companyinfo-name ">
+                                            <a href="#" ng-click="companyClick(company.NAME)">{{company.NAME}}</a>
+                                        </div>
+                                        <div class="businesscard-companyinfo-addressline ">{{company.ADDRESS}}</div>
+                                        <div class="businesscard-companyinfo-citystatezip ">
+                                            <span id="city">{{company.CITY+', '}}</span>
+                                            <span id="state">{{company.STATE+', '}}</span> <span id="zip">{{company.ZIP}}</span>
+                                        </div>
+                                        <div class="businesscard-companyinfo-country ">
+                                            <span class="value">{{company.COUNTRY}}</span>
+                                        </div>
+                                        <div style="font-size: 12px;" class="businesscard-companyinfo-name ">
+                                            <a href="#" ng-click="companyClick(company.NAME)">more infomation >></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padding-bottom-20px"></div>
+                            <div class="padding-bottom-20px">
+                                <div style="height: 30px;"></div>        
+                            </div>
+                        </div>
+		</div>
+		<div class="edit_contact col-sm-4">
+			<div class="businesscard-quicklinks">
+                            <div class="businesscard-quicklinks-section">
+                                <div class="businesscard-quicklinks-section-header">Do you have better info?</div>
+                                <div class="businesscard-quicklinks-list-wrapper">
+                                    <div class="contact_detail">
+                                        <a class="update-details businesscard-quicklinks-section-item" id="updateContact" popupform="#login-box">Update Contact</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+		</div>
+	</div>
+</div>
+-->
+
+
+
+<div class="container-fluid">
+	<div class="row">
+            <div class="col-md-2" style="background-color: #8DD9F1;">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+		</div>
+		<div class="col-md-8" style="background-color: #8DD9F1;">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px">Contact</div>
+		</div>
+		<div class="col-md-2" style="background-color: #8DD9F1;">
+                    <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+		</div>
+	</div>
+    <div class="row" >
+		<div class="col-md-2">
+		</div>
+        <div class="col-md-8" style="padding: 0px;">
+                    <div class="detail-contact row" style="margin-right: 0px;">
+		<div class="info_contact col-sm-7">
+                        <div class="businesscard-contactinfo">
+                            <div class="businesscard-contactinfo-wrapper">
+                                <div class="businesscard-background">
+                                    <div class="businesscard-contactinfo-name">{{contactInfo.FIRSTNAME +" "+contactInfo.LASTNAME}}</div>
+                                    <div class="businesscard-contactinfo-title">{{contactInfo.TITLE}}</div>
+                                    <div class="businesscard-contactinfo-phone">
+                                        <span id="hqPhone" class="businesscard-contact-info-hqphone">{{"Phone: "+company.PHONE}}</span>
+                                    </div>
+                                    <div class="businesscard-contactinfo-phone">
+                                        <span id="hqPhone" class="businesscard-contact-info-hqphone">EMAIL: {{contactInfo.EMAIL}}</span>
+                                    </div>
+                                    <div class="businesscard-companyinfo">
+                                        <div class="businesscard-companyinfo-name ">
+                                            <a href="#" ng-click="companyClick(company.NAME)">{{company.NAME}}</a>
+                                        </div>
+                                        <div class="businesscard-companyinfo-addressline ">{{company.ADDRESS}}</div>
+                                        <div class="businesscard-companyinfo-citystatezip ">
+                                            <span id="city">{{company.CITY+', '}}</span>
+                                            <span id="state">{{company.STATE+', '}}</span> <span id="zip">{{company.ZIP}}</span>
+                                        </div>
+                                        <div class="businesscard-companyinfo-country ">
+                                            <span class="value">{{company.COUNTRY}}</span>
+                                        </div>
+                                        <div style="font-size: 12px;" class="businesscard-companyinfo-name ">
+                                            <a href="#" ng-click="companyClick(company.NAME)">more infomation >></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="padding-bottom-20px"></div>
+                            <div class="padding-bottom-20px">
+                                <div style="height: 30px;"></div>        
+                            </div>
+                        </div>
+		</div>
+		<div class="edit_contact col-sm-4">
+			<div class="businesscard-quicklinks">
+                            <div class="businesscard-quicklinks-section">
+                                <div class="businesscard-quicklinks-section-header">Do you have better info?</div>
+                                <div class="businesscard-quicklinks-list-wrapper">
+                                    <div class="contact_detail">
+                                        <a class="update-details businesscard-quicklinks-section-item" id="updateContact" popupform="#login-box">Update Contact</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+		</div>
+	</div>
+		</div>
+		<div class="col-md-2">
+		</div>
+	</div>
+</div>

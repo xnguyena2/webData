@@ -1,0 +1,5 @@
+DirectoryIndex index.html index.htm default.htm index.php index.php3 index.phtml index.php5 index.shtml mwindex.phtml
+RewriteEngine on
+#RewriteRule ^([^/]*)/(.*\.html) /$1/process.php?page=$2 [R=301,L]
+RewriteRule ^([^/]*contact)/(.*).html$ /mysite/testguid/contactinfo.php?info=$2 [NC,L]
+RewriteRule ^([^/]*company)/(.*).html$ /mysite/testguid/company.php?name=$2 [NC,L]

@@ -1,0 +1,55 @@
+<div>
+    <div class="breadcrumb-area">
+        <h1 style="text-align: left;padding: 0px;" class="breadcrumb-text ng-binding">{{textResults}}</h1>
+    </div>
+    <div class="col-sm-12 ng-scope" style="padding-left: 0px;">
+        <div id="tableExample_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+            <table id="tableExample" class="table tbl-project-report table table-striped table-bordered table-hover" datatable-basic>
+                <thead>
+                    <tr>
+                        <th style="padding: 0px;background-color: darkcyan;width: 96px;">
+                <p style="color: white;float: left;margin-right: 10px;/* margin-top: 10px; */margin-left: 10px;padding-top: 3px;">Select All</p>
+                <input type="checkbox" ng-model="checkkAll.value" ng-change="isSelectedAll()">
+                </th>
+                                    <th style="color: white;background-color: darkcyan;">Contact</th>
+                                    <th style="color: white;background-color: darkcyan;">Company</th>
+                                    <th style="color: white;background-color: darkcyan;">Info</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                    <tr class="info-text" ng-repeat="conts in contacts track by $index">
+                                            <td style="
+                              color: #227EA5;"><input type="checkbox" ng-model="selectStatus[$index]" ng-change="isSelected($index,conts.ID)"></td>
+                                            <td style="
+                              color: #227EA5;"><a href="{{rootUrl}}mysite/testguid/contact/{{token}}_{{contacts[$index]['ID']}}_{{conts.FIRSTNAME.replace('?','')}}_{{conts.LASTNAME.replace('?','')}}.html" ng-click="contactClick($index)">{{conts.FIRSTNAME + " " +conts.LASTNAME}}</a><br/>{{conts.TITLE}}</td>
+                                            <td style="
+                                                    color: #227EA5;"><a href="{{rootUrl}}mysite/testguid/company/{{conts.COMPANY}}.html" ng-click="companyClick(conts.COMPANY)">{{conts.COMPANY}}</a><br/>{{conts.ADDRESS+","+conts.CITY+","+conts.STATE+","+conts.COUNTRY}}</td>
+                                            <td>{{conts.EMAIL}}</td>
+                              </tr>
+                            </tbody>
+                    </table>
+                    <div class="dt-toolbar-footer">
+                            <div class="col-sm-6 col-xs-12 hidden-xs">
+                                <div class="dataTables_info" id="tableExample_info" role="status" aria-live="polite">
+                                    <button type="button" style="color: #000000;" ng-click="goBackToExports()" ng-show="!showInBarSearch">Go Back to Exports!</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div ng-show="pagingBar" class="dataTables_paginate paging_simple_numbers" id="tableExample_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button previous {{previousPaging}}" id="tableExample_previous" ng-click="currentIndex > 1 ? pagingClick(currentIndex-1):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="0" tabindex="0">Previous</a></li>
+                                        <li ng-show="showNext[0]" class="paginate_button {{acctive[0]}}" ng-click="acctive[0] === '' ?pagingClick(minPage):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="1" tabindex="0">{{minPage}}</a></li>
+                                        <li ng-show="showNext[1]" class="paginate_button {{acctive[1]}}" ng-click="textpage[1] !== '...'? pagingClick(textpage[1]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="2" tabindex="0">{{textpage[1]}}</a></li>
+                                        <li ng-show="showNext[2]" class="paginate_button {{acctive[2]}}" ng-click="acctive[2] === '' ?pagingClick(textpage[2]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="3" tabindex="0">{{textpage[2]}}</a></li>
+                                        <li ng-show="showNext[3]" class="paginate_button {{acctive[3]}}" ng-click="acctive[3] === '' ?pagingClick(textpage[3]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="4" tabindex="0">{{textpage[3]}}</a></li>
+                                        <li ng-show="showNext[4]" class="paginate_button {{acctive[4]}}" ng-click="acctive[4] === '' ?pagingClick(textpage[4]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="5" tabindex="0">{{textpage[4]}}</a></li>
+                                        <li ng-show="showNext[5]" class="paginate_button {{acctive[5]}}" ng-click="textpage[5] !== '...' ? pagingClick(textpage[5]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="6" tabindex="0">{{textpage[5]}}</a></li>
+                                        <li ng-show="showNext[6]" class="paginate_button {{acctive[6]}}" ng-click="acctive[6] === '' ?pagingClick(maxPage):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="7" tabindex="0">{{maxPage}}</a></li>
+                                        <li class="paginate_button next {{nextPaging}}" id="tableExample_next" ng-click="currentIndex < maxPage ? pagingClick(currentIndex+1):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="8" tabindex="0">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>

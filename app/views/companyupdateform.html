@@ -1,0 +1,190 @@
+<div class="row">
+    <div class="col-md-2" style="background-color: #8DD9F1;">
+        <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+    </div>
+    <div class="col-md-8" style="background-color: #8DD9F1;">
+        <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px;margin-left: -45px;">Update Company</div>
+    </div>
+    <div class="col-md-2" style="background-color: #8DD9F1;">
+        <div class="header-company" style="margin-top: 0px;padding-left: 0px;padding-top: 5px"></div>
+    </div>
+</div>
+<div class="dc-body general">
+    <div class="content">
+        <div class="padding-20px">
+            <div class="general-page-message-container">
+            </div>
+            <p>Update information on this company.</p>
+            <br>
+            <div class="general-display-none" title="errors"></div>
+            <div class="general-display-none" title="warnings"></div>   
+            <form id="companyForm" class="form" action="{{rootUrl+'mysite/updatecompany.php'}}" method="post">
+                <input type="hidden" name="companyId" value="{{companyName}}">
+                <input type="hidden" name="userEmail" value="{{userID}}">
+                <div class="form-section">
+                    <table>
+                        <tbody>
+                            <tr id="websiteRow" class="canOpaqueDisable ">
+                                <td class="form-section-label">
+                                    Website
+                                    *</td>     
+                                <td class="form-section-inputfield">                         
+                                    <input ng-model="companyWebsite" name="companyWebsite" class="form-section-inputfield-text required-field validated-field" placeholder="companyname.com" type="text" maxlength="128">
+                                </td>
+                            </tr>
+                            <tr id="nameRow" class=" canOpaqueDisable ">
+                                <td class="form-section-label">
+                                    Company Name
+                                    *</td>
+                                <td class="form-section-inputfield">                          
+                                    <input ng-model="companyName" name="companyName" class="form-section-inputfield-text required-field validated-field" placeholder="Company Name, Inc." type="text" value="&amp;Barr" maxlength="128">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="locationInfo" class="form-section  canOpaqueDisable ">
+                    <div class="form-section-header">Location Info</div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="form-section-label">
+                                    Country
+                                    *</td>
+                                <td class="form-section-inputfield">                                   
+                                    <select ng-model="companyCountry" ng-options="item.parent.category for item in countries" class="form-section-inputfield-dropdown required-field validated-field">
+                                    </select>
+                                    <input type="hidden" name="companyCountry" value="{{companyCountry.parent.category}}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    Phone
+                                    *</td>
+                                <td class="form-section-inputfield">
+                                    <input ng-model="companyPhone" name="companyPhone" class="form-section-inputfield-text required-field validated-field " placeholder="(Area Code) Local Number" type="text" value="+1.407.849.0100" maxlength="32">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    Address
+                                    *</td>
+                                <td class="form-section-inputfield">  
+                                    <input ng-model="companyAddress" name="companyAddress" class="form-section-inputfield-text required-field validated-field" placeholder="123 Main Street" type="text" value="600 E Washington St" maxlength="128">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">City
+                                </td>
+                                <td class="form-section-inputfield">
+                                    <input ng-model="companyCity" name="companyCity" class="form-section-inputfield-text" placeholder="San Francisco" type="text" maxlength="128">                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    State/Province
+                                </td>
+                                <td class="form-section-inputfield">                   
+                                    <select ng-model="companyState" ng-options="item.category for item in companyCountry.subItem" class="form-section-inputfield-dropdown required-field validated-field" ></select>
+                                    <input type="hidden" name="companyState" value="{{companyState.key}}" >
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    Zip/Postal Code
+                                    *</td>
+                                <td class="form-section-inputfield">
+                                    <input ng-model="companyZip" name="companyZip" class="form-section-inputfield-text required-field validated-field" placeholder="94105" type="text" maxlength="32">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="otherInfo" class="form-section  canOpaqueDisable ">
+                    <div class="form-section-header">Other Info</div>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td class="form-section-label">
+                                    Industries
+                                    *</td>
+                                <td class="form-section-inputfield">
+                                    <select ng-model="companyMainIndustry" ng-options="item.parent.category for item in industries" class="required-field validated-field company-form-section-narrowdropdown-left ">
+                                    </select>
+                                    <input type="hidden" name="companyMainIndustry" value="{{companyMainIndustry.parent.category}}" >
+                                    <select ng-model="companyMainSubIndustry" ng-options="item.category for item in companyMainIndustry.subItem" class="company-form-section-narrowdropdown-right required-field validated-field  ">
+                                    </select>
+                                    <input type="hidden" name="companyMainSubIndustry" value="{{companyMainSubIndustry.category}}" >
+                                </td>
+                            </tr>
+                            <tr ng-show="showIndustry[0]"> <!--class="general-display-none"-->
+                                <td></td>
+                                <td class="form-section-inputfield">
+                                    <select ng-model="company2Industry" ng-options="item.parent.category for item in industries" class="required-field validated-field company-form-section-narrowdropdown-left ">
+                                    </select>
+                                    <input type="hidden" name="company2Industry" value="{{company2Industry.parent.category}}" >
+                                    <select ng-model="company2SubIndustry" ng-options="item.category for item in company2Industry.subItem" class="required-field validated-field company-form-section-narrowdropdown-right ">
+                                    </select>
+                                    <input type="hidden" name="company2SubIndustry" value="{{company2SubIndustry.category}}" >
+                                </td>
+                                <td class="company-form-section-control">
+                                    <a ng-click="removeIndustry(0)">[Remove]</a>
+                                </td>
+                            </tr>
+                            <tr ng-show="showIndustry[1]"><!-- class="general-display-none"-->
+                                <td></td>
+                                <td class="form-section-inputfield">
+                                    <select ng-model="company3Industry" ng-options="item.parent.category for item in industries" class="required-field validated-field company-form-section-narrowdropdown-left ">
+                                    </select>                    
+                                    <input type="hidden" name="company3Industry" value="{{company3Industry.parent.category}}" >
+                                    <select ng-model="company3SubIndustry" ng-options="item.category for item in company3Industry.subItem" class="required-field validated-field company-form-section-narrowdropdown-right">
+                                    </select>
+                                    <input type="hidden" name="company3SubIndustry" value="{{company3SubIndustry.category}}" >
+                                </td>
+                                <td class="company-form-section-control">
+                                    <a ng-click="removeIndustry(1)">[Remove]</a>
+                                </td>
+                            </tr>
+                            <tr ng-show="!(showIndustry[0] && showIndustry[1])" style="display: table-row;">
+                                <td></td>
+                                <td colspan="2" class="company-form-addindustry-control ">
+                                    <a ng-click="addNewIndustry()">[Add another industry]</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    Employees
+                                    *</td>
+                                <td class="form-section-inputfield">
+                                    <select ng-model="companySizeUpdate" ng-options="item.value for item in companySize" class="required-field validated-field company-form-section-narrowdropdown-left ">                        
+                                    </select>                    
+                                    <input type="hidden" name="companySizeUpdate" value="{{companySizeUpdate.value}}" >
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="form-section-label">
+                                    Revenue
+                                    *</td>
+                                <td class="form-section-inputfield">
+                                    <select ng-model="companyRevenueUpdate" ng-options="item.value for item in companyRevenue" class="required-field validated-field company-form-section-narrowdropdown-left ">
+                                    </select>                    
+                                    <input type="hidden" name="companyRevenueUpdate" value="{{companyRevenueUpdate.value}}" >
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="cancelAddButtons" class="margin-top-5px margin-bottom-5px float-right">
+                    <button id="cancel" type="button" class="button-standard button-secondaryvtrack-click" onclick="window.location.href = rootUrl+'mysite/app/';">
+                        <span class="button-standard-text">Cancel</span>
+                    </button>&nbsp;
+                    <button id="submitForm" type="submit" class="button-standard button-primary validatedButton track-click">
+                        <span class="button-standard-text">Update Company</span>
+                    </button>&nbsp;
+                </div>
+            </form>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>

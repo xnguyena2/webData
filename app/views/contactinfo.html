@@ -1,0 +1,166 @@
+<div style="padding-left: 5px;border-left: 7px solid #DFDFDF;margin-left: 80px;margin-top: 50px;">
+    <div style="padding-left: 20px">
+        <div>
+            <div class="profile-overview-content">
+                <div id="member-97895043" class="masthead">
+                    <div class="account-icons">
+                        <span class="fp-degree-icon"></span>
+                        <div id="badge-container" data-li-template="badge">
+                            <div id="badge" class="editable-item"></div>
+
+                        </div>
+
+                    </div>
+                    <div data-li-template="p2_basic_info">
+                        <div id="name-container" data-li-template="name">
+                            <div id="name" class="editable-item">
+                                <h1 style="padding-top: 0;text-align: left;padding-left: 0px;padding-bottom: 0;margin-bottom: 0;font-weight: bold;display: inline-block;">
+                                    <span class="fn">
+                                        <span class="full-name" dir="auto">{{contactInfo.FIRSTNAME +" "+contactInfo.LASTNAME}}</span>
+
+                                    </span>
+                                </h1>
+                                <a style="font-size: 13px; color: #00C6FF;font-style: italic;display: inline-block;">update contact</a>
+                            </div>
+                        </div>
+                        <div id="headline-container" data-li-template="headline">
+                            <div id="headline" class="editable-item">
+                                <p style="color: #868686;margin-bottom: 0;" dir="ltr">{{contactInfo.TITLE}}</p>
+                            </div>
+                        </div>
+                        <div class="demographic-info adr editable-item" id="demographics">
+                            <div id="location-container" data-li-template="location">
+                                <div id="location" class="editable-item">
+                                    <dl style="margin-bottom: 14px">
+                                        <dt>Location</dt>
+                                        <dd>
+                                            <span class="locality">
+                                                <a name="location">{{'Country: '+contactInfo.PROFILECOUNTRY}}</a>
+                                            </span>
+                                        </dd>
+                                        <dt>Level</dt>
+                                        <dd class="industry">
+                                            <a name="industry">{{'Level: '+contactInfo.JOBTITLE}}</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table summary="Overview for Yasemin Yüksel">
+                    <tbody>
+                        <tr id="overview-summary-current">
+                            <th scope="row">
+                                <a>Email</a>
+                            </th>
+                            <td>
+                                <ol>
+                                    <li>
+                                        <a name="company" dir="auto">{{contactInfo.EMAIL}}</a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                        <tr id="overview-summary-past">
+                            <th scope="row">
+                                <a>Department</a>
+                            </th>
+                            <td>
+                                <ol>
+                                    <li>
+                                        <span data-tracking="mcp_profile_sum" class="new-miniprofile-container /biz/miniprofile/1109846?pathWildcard=1109846" data-li-url="/biz/miniprofile/1109846?pathWildcard=1109846" data-li-getjs="https://static.licdn.com/scds/concat/common/js?h=40vfeoewuurexnhvi1o2qiknu&amp;fc=2" data-li-miniprofile-id="LI-1470789">
+                                            <strong>
+                                                <a dir="auto">{{contactInfo.DEPARTMENT}}</a>
+                                            </strong>
+                                        </span>
+                                    </li>
+                                </ol>                                
+                            </td>
+                        </tr>
+                        <tr id="overview-summary-education" ng-show="contactInfo.PROFILECITY!=='' && contactInfo.PROFILESTATE!==''">
+                            <th scope="row">
+                                <a>Address</a>
+                            </th>
+                            <td>
+                                <ol>
+                                    <li>
+                                        <a>{{contactInfo.PROFILECITY+' ,'+contactInfo.PROFILESTATE}} </a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="margin-left: 20px; padding-top: 5px;border-top: 7px solid #DFDFDF;margin-top: 20px;">
+        <div>
+            <div class="profile-overview-content">
+                <div id="member-97895043" class="masthead">
+                    <div class="account-icons">
+                        <span class="fp-degree-icon"></span>
+                        <div id="badge-container" data-li-template="badge">
+                            <div id="badge" class="editable-item"></div>
+
+                        </div>
+
+                    </div>
+                    <div data-li-template="p2_basic_info">
+                        <div id="name-container" data-li-template="name">
+                            <div id="name" class="editable-item">
+                                <h1 style="padding-top: 0;text-align: left;padding-left: 0px;padding-bottom: 0;margin-bottom: 0;font-weight: bold;">
+                                    <span class="fn">
+                                        <span class="full-name" dir="auto">{{company.NAME}}</span>
+
+                                    </span>
+                                </h1>
+                            </div>
+                        </div>
+                        <div id="headline-container" data-li-template="headline">
+                            <div id="headline" class="editable-item">
+                                <p style="color: #868686;margin-bottom: 0;" dir="ltr">{{company.INDUSTRIES}}</p>
+                            </div>
+                        </div>
+                        <div class="demographic-info adr editable-item" id="demographics">
+                            <div id="location-container" data-li-template="location">
+                                <div id="location" class="editable-item">
+                                    <dl style="margin-bottom: 14px">
+                                        <dt>Revenue</dt>
+                                        <dd>
+                                            <span class="locality">
+                                                <a name="location">{{'Revenue: '+company.REVENUE}}</a>
+                                            </span>
+                                        </dd>
+                                        <dt>Employee</dt>
+                                        <dd class="industry">
+                                            <a name="industry">{{'Employee: '+company.SIZE}}</a>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table summary="Overview for Yasemin Yüksel">
+                    <tbody>
+                        <tr id="overview-summary-education">
+                            <th scope="row">
+                                <a>Address</a>
+                            </th>
+                            <td>
+                                <ol>
+                                    <li>
+                                        <a>{{company.ADDRESS+' ,'+company.CITY+' ,'+company.STATE+' ,'+company.COUNTRY+' ,'+company.ZIP}} </a>
+                                    </li>
+                                </ol>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <a href="{{rootUrl}}mysite/testguid/company/{{company.NAME}}.html" style="font-size: 13px; color: #00C6FF;font-style: italic;" ng-click="companyClick(company.NAME)">more infomation >></a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,132 @@
+.bad {text-decoration:line-through;}
+.businesscard{background:url(../styles/img/recordbody.png) repeat; margin: 15px 0px 0px;}
+.businesscard-background{background:url(../styles/img/cardonpage_template.png) no-repeat; width:480px; height:257px;}
+.businesscard-background.inactive{opacity:0.5;filter:alpha(opacity=50);}
+.businesscard-contactinfo{float:left;  padding:20px 30px 0px 25px; position:relative}
+.businesscard-contactinfo-title{padding: 0 0px 20px 30px; font-size:14px; color: #7e7e7e}
+.businesscard-companyinfo{padding: 10px 30px 0 0; text-align:right;}
+.businesscard-personhandle{float: left; padding: 0 0 0 30px;}
+.businesscard-socialhandle{padding: 3px}
+#businesscard-twitter-socialhandle{background-image: url("../../images/contact/Twitter_logo_blue_16.png");background-repeat: no-repeat; width:20px; height:16px;}
+#businesscard-linkedin-socialhandle{background-image: url("../../images/contact/InBug-16px_0.png");background-repeat: no-repeat; width:16px; height:16px;}
+
+.businesscard-contactinfo-last-updated{color:#7e7e7e; font-size:11px; float: right;}
+.businesscard-contactinfo-preferences{
+	background-color:#666666; color:#FFFFFF; max-width:465px; height:22px; box-shadow:  0px 1px 0px #FFFFFF; -webkit-box-shadow: 0px 1px 0px #FFFFFF;
+    font:bold 12px Arial; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; margin:-6px 3px 0; padding:12px 0 2px 25px; z-index:-1; position:relative
+}
+.businesscard-contactinfo-preferences-label{color:#CDCDCD}
+
+.businesscard-quicklinks{float:left;width:375px;}
+.businesscard-quicklinks-section{}
+.businesscard-quicklinks-section-last{padding:9px;}
+.businesscard-quicklinks-section-header{font-weight:normal; font-size:21px; padding:20px 0 8px 0; color:#666666}
+.businesscard-quicklinks-section-item{margin-left:15px; padding:0 0 0px 0;font-size:18px; color: #00668f ; width: 400px}
+.businesscard-quicklinks-section-links{font-weight:normal; font-size:18px; padding:0px 0 8px 0; color:#666666}
+.businesscard-contacthistory{padding:20px 10px 20px 10px;}
+.businesscard-contacthistory-section{display:none;}
+.businesscard-contacthistory-title{color:#86A6CB;font-size:14px;font-weight:700;}
+
+.businesscard-update-get-points{padding:0 0 0 15px; font-size: 16px; color: #999999;}
+.businesscard-update-hover-get-points{font-weight: bold; color: #999999;}
+
+.result thead.empty{background:none repeat scroll 0 0 #eee;border-top-color:#ccc;color:#ccc;}
+.result .thDate{width:75px;}
+.result .thVersion{width:95px;}
+
+.contactversion-icon{
+    cursor:pointer;
+}
+
+.businesscard-contactinfo-name,#contactHistory .table-message{padding: 20px 0 0px 30px; font-size:20px;font-weight:bold; color: #2f2f2f}
+.businesscard-contactinfo-name.hover-preview-name { color: #00668f; }
+.businesscard-contactinfo-phone,#contactHistory .table-message a{padding: 0 0 0 30px; font-size:14px; color: #2f2f2f}
+.businesscard-contactinfo-email,.businesscard-companyinfo-name{padding: 0 0 0 30px;font-size:18px; font-weight:bold ;color: #00668f}
+
+.businesscard-notowned-message { font-family: Arial; font-size: 14px; padding-left: 30px; color: #2f2f2f; max-width: 400px; }
+.businesscard-bogus-message { font-family: Arial; font-size: 13px; padding: 17px 0 0 30px; color: #2f2f2f; }
+
+.businesscard-companyinfo-addressline {font-size:13px; color: #2f2f2f}
+.businesscard-companyinfo-citystatezip {font-size:13px; color: #2f2f2f}
+.businesscard-companyinfo-country {font-size:13px; color: #2f2f2f}
+
+.businesscard-contacthistory-preview{position:absolute;width:380px;display:none; z-index: 200;}
+.businesscard-background.bogus-preview {background:url(../../images/contact/cardonpage_template_sm.png) no-repeat; background-size: 100%; width: 472px; height: 50px; }
+.businesscard-preview-clickable{cursor:pointer;}
+.contact-history-expandcollapse{cursor:pointer;}
+.thAction,.th-updated-by,.th-royalty-owner{width:150px;}
+.contact-hover-quickupdate-title{padding-top:10px;width:350px;height:70px;}
+.contact-hover-left-company {padding-top:10px; width:400px;height:120px;}
+.contact-hover-left-company table {padding-left:10px; height:1%;width:90%;}
+
+.contact-hover-owned-update {padding-top:10px; width:400px;height:100px;}
+.contact-hover-owned-update table {padding:10px 0 0 40px; height:1%;width:80%;}
+
+.businesscard-contacthistory-revert-compare{width:550px;}
+.businesscard-contacthistory-revert-buttons{padding-top:20px;}
+.businesscard-contacthistory-difference{background-color:#8eb8d5;}
+.businesscard-contacthistory-line-different{background-color:#d8effb;font-weight:bold;}
+.businesscard-contacthistory-line-same{color:#bebebe;}
+#revertVersionForm .result{border:1px solid #CDC9C9;border-collapse:collapse;color:#333;font-size:11px;width:100%;}
+#revertVersionForm .contact-hover-revert-versionheader{font-size:16px;font-weight:bold;}
+#revertVersionForm {padding:15px 0px 10px;}
+#revertVersionForm tr{border-bottom:1px dashed #CDC9C9;}
+#revertVersionForm thead th{padding:3px;text-align:left;}
+#revertVersionForm thead th.label-column{width:100px;}
+#revertVersionForm thead th.current-version-column{width:240px;}
+#revertVersionForm tbody tr td{padding:3px;}
+.businesscard-contacthistory-revert-arrow{
+    float:left;
+    position:relative;
+    left:45px;
+}
+
+.contact-quickupdate-deactivate-container, .contact-quickupdate-deactivateunowned-container{width:400px;height:200px;}
+.contact-quickupdate-emailupdate-container, .contact-quickupdate-phoneupdate-container{width:400px;height:200px;}
+
+.contact-quickupdate-deactivate-reason{padding:5px 0px;}
+
+.businesscard-quicklinks-section-item-li {float: left ; color: #00668F; }
+
+.businesscard-quicklink-list{padding-top:8px; padding-left:15px; width:400px;}
+
+.businesscard-inactive-header, .businesscard-nonlive-warning{font-size:21px; color:#ff0000; padding:15px 0px 0px 0px;}
+.businesscard-inactive-quicklinks-header{font-size:21px; padding:15px 0 12px 0; color:#666666;}
+
+#businesscard-deactive-table {
+    width: 370px;
+}
+
+.not-at-company-option-radio {
+    width:8%;
+    vertical-align: top;
+}
+
+.not-at-company-option-text {
+    vertical-align: top;
+    padding-top:5px;
+    padding-bottom: 20px;  
+}
+
+.not-at-company-email-input {
+    padding-top:5px;
+}
+.quick-update-input {
+	text-indent:5px;	
+}
+
+.businesscard-nonlive-warning {
+	color: #ff0000;
+}
+
+#tabline {
+	height: 1px;
+	border: none;
+	margin:0px;
+	color: #C0C0C0;
+	background-color: #C0C0C0;
+}
+
+.businesscard-contact-info-hqphone {
+	padding-right: 20px;
+}

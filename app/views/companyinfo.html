@@ -1,0 +1,62 @@
+<div style="padding-left: 5px;border-left: 7px solid #DFDFDF;margin-left: 80px;margin-top: 50px;">
+    <div style="padding-left: 20px">
+        <div class="company-phone" style="">
+            <h1 class="h1title-text">
+                Phone Number:
+            </h1>
+            <h1 class="h1info-text">
+                {{company.PHONE}}
+            </h1>
+        </div>
+        <div class="company-phone" style="">
+            <h1 class="h1title-text">
+                Website:
+            </h1>
+            <h1 class="h1info-text">
+                <a href="{{'http://'+company.URL}}">{{company.URL}}</a>
+            </h1>
+        </div>
+        <div class="company-phone" style="">
+            <h1 class="h1title-text">
+                Address:
+            </h1>
+            <h1 class="h1info-text">
+                {{company.ADDRESS+' ,'+company.CITY+', '+company.STATE+' ,'+company.ZIP+' ,'+company.COUNTRY}}
+            </h1>
+        </div>
+        <div class="company-phone" style="">
+            <h1 class="h1title-text">
+                Industry:
+            </h1>
+            <h1 class="h1info-text">
+                {{company.INDUSTRIES}}
+            </h1>
+        </div>
+        <div class="company-phone" style="">
+            <div style="display: inline-block">
+                <h1 class="h1title-text">
+                    Employee:
+                </h1>
+                <h1 class="h1info-text">
+                    {{company.SIZE}}
+                </h1>                
+            </div>
+            <div style="display: inline-block">
+                <h1 class="h1title-text">
+                    Revenue;
+                </h1>
+                <h1 class="h1info-text">
+                    {{company.REVENUE}}
+                </h1>                
+            </div>
+            <div style="display: inline-block">
+                <h1 class="h1title-text">
+                    Ownership:
+                </h1>
+                <h1 class="h1info-text">
+                    {{company.OWNERSHIP}}
+                </h1>                
+            </div>
+        </div>
+    </div>
+</div>
