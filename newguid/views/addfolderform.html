@@ -1,0 +1,23 @@
+<form method="post" class="signin" action="#">
+    <div>
+        <input type="text" id="newFolderName" name="firstname" placeholder="Enter Name Floder">
+          <button type="button" ng-click="showEmailAndPhone(null)">Add new</button>
+    </div>
+
+      <table id="tableExample" class="table tbl-project-report table table-striped table-bordered table-hover" datatable-basic>
+              <thead>
+                <tr>
+                        <th style="background-color: #8DD9F1;">Folder</th>
+                        <th style="background-color: #8DD9F1;">Add to</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr class="info-text" ng-repeat="folder in folders track by $index">
+                          <td>{{folder.FOLDER}}</td>
+                          <td style="color: #227EA5;">
+                              <a href="#" ng-click="showEmailAndPhone(folder.FOLDER)">Add to This Folder!</a>
+                          </td>
+                  </tr>
+              </tbody>
+      </table>
+</form>

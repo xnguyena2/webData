@@ -1,4 +1,5 @@
 var rootUrl = "http://localhost/";
+//var rootUrl = "http://93.158.211.165/~tcshosting/";
 /*$(document).ready(function () {
     initalAllEvent();
     
@@ -108,18 +109,18 @@ function initalAllEvent(){
                    passwordsignup: {
                        required: true,
                        minlength: 6,
-                       maxlength: 10, 
+                       maxlength: 100
                    } , 
                    passwordsignup_confirm: { 
                        equalTo: "#passwordsignup",
                        minlength: 6,
-                       maxlength: 10
+                       maxlength: 100
                    }
                },
         
                 // Specify the validation error messages
                 messages: {
-                    usernamesignup: "Please enter your first name",
+                    usernamesignup: "Please enter your user name",
                     passwordsignup: {
                         required: "Please provide a password",
                         minlength: "Your password must be at least 5 characters long"
@@ -156,8 +157,11 @@ function initalAllEvent(){
             success: function (response) {
                 //console.log(response);
                 if (response !== '-1'){
-                    $.cookie('TOKEN', response['TOKEN'], {expires: 7, path: '/'});
-                    window.location.href = rootUrl+"mysite/testguid/index.html";
+                    if(response['TOKEN'] === '' || response['TOKEN'] === null)
+                        $.cookie('TOKEN', 'ban', {expires: 7, path: '/'});
+                    else
+                        $.cookie('TOKEN', response['TOKEN'], {expires: 7, path: '/'});
+                    window.location.href = rootUrl+"mysite/newguid/afterlogin.html";
                 }
                 else $('#noticeInfomation').text("Email or Password incorrect!");
                 //else console.log(getCookie("token"));
@@ -179,7 +183,7 @@ function initalAllEvent(){
                     console.log("reponse:"+response);
                     if (response !== '-1'){
                         $.cookie('TOKEN', response['TOKEN'], {expires: 7, path: '/'});
-                        window.location.href = rootUrl+"mysite/testguid/index.html";
+                        window.location.href = rootUrl+"mysite/newguid/afterlogin.html";
                     }
                     else alert('email alredy exists!');
                 }
@@ -205,7 +209,7 @@ $(document).on('click', '#subcribeSliver, #subcribeGold, #subcribePlatinum, #sub
     $('#paypalSubmitButton').click();
 });
 
-$(document).on('click', '#updateContact, #showPaymentForm, #addCredit, #showUnscribForm, #showSubcriForm', function () {
+$(document).on('click', '#updateContact, #showPaymentForm, #addCredit, #showUnscribForm, #showSubcriForm, #showChangePasswordForm', function () {
     // Getting the variable's value from a link 
     var loginBox = $(this).attr('popupform');
 
@@ -312,3 +316,29 @@ function JSONToCSVConvertor(JSONData, ReportTitle, ShowLabel) {
     link.click();
     document.body.removeChild(link);
 }
+
+function getXY(evt) {
+    var element = document.getElementById('mainInPutSearch');  //replace elementId with your element's Id.
+    var rect = element.getBoundingClientRect();
+    var scrollTop = document.documentElement.scrollTop?
+                    document.documentElement.scrollTop:document.body.scrollTop;
+    var scrollLeft = document.documentElement.scrollLeft?                   
+                    document.documentElement.scrollLeft:document.body.scrollLeft;
+    var elementLeft = rect.left+scrollLeft;  
+    var elementTop = rect.top+scrollTop;
+
+    if (document.all){ //detects using IE   
+        x = event.clientX+scrollLeft-elementLeft; //event not evt because of IE
+        y = event.clientY+scrollTop-elementTop;
+    }
+    else{
+        x = evt.pageX-elementLeft;
+        y = evt.pageY-elementTop;
+    }
+    //console.log((x+" ,"+y));
+    return x;
+}
+$(document).on('click','#userMenu',function(){
+    console.log('');
+    $("#userMenuFull").slideToggle("slow");    
+});

@@ -20,6 +20,7 @@ $companyName = filter_input(INPUT_POST, 'companyName');
 $token = filter_input(INPUT_POST, 'token');
 $page = filter_input(INPUT_POST, 'page');
 $getMax = filter_input(INPUT_POST, 'getmax');
+$mainSearch = filter_input(INPUT_POST, 'mainSearch');
 
 include './DBManager.php';
 $dataBaseManager = new DBManager();
@@ -27,13 +28,13 @@ $dataBaseManager->Connect();
 if ($dataBaseManager->connectSucessDataBase) {
     if (isset($getMax)) {
         $dataBaseManager->GetMaxResults($sizeParameter, $industriesParameter, $revenueParameter, $location_code,
-                $locationParameter, $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName);
+                $locationParameter, $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName, $mainSearch);
     } else {
         if (!isset($page)) {
             $page = 0;
         }
         $dataBaseManager->search($sizeParameter, $industriesParameter, $revenueParameter, $location_code, $page, $token, 
-                $locationParameter, $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName);
+                $locationParameter, $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName, $mainSearch);
     }
 } else {
     echo -1;

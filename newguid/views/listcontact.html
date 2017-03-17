@@ -1,0 +1,68 @@
+
+           <div ng-class=" stillSearching ? 'bright' : 'bright loading'">
+              <h3 ng-class=" stillSearching ? '' : 'opacity-searching'"><span class="bluee">My Results</span></h3>
+                 <div ng-class=" stillSearching ? 'row' : 'row opacity-searching'">
+                        <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12">
+                            <form action="" method="get" style="padding-left: 2px;">
+                             <input id="searchTextInput" ng-keypress="searchResultEnter($event)" ng-model="resultSearchFliter" name="" type="text" class="search2" placeholder=" First Name, Last Name">
+                             </form>
+                         </div>
+                         <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12">
+                            <span class="sl"><strong>{{textResults}}</strong></span>
+                            <div class="dataTables_length" id="example_length" style="float: right" ng-show="showInBarSearch">
+                                <label style="font-size: 15px" ng-show="isLogin">Show <select ng-change="dropDownChange()" ng-model="dropDownModel" ng-options="item.id for item in dropDownValue" id="selectNumberDropDown" name="example_length" aria-controls="example" class="">
+                                    </select> entries</label>
+                            </div>
+                         </div>
+                 </div>
+                 <div ng-class=" stillSearching ? 'tblsty clearfix' : 'tblsty clearfix opacity-searching'">
+                       <table width="100%" border="1" cellspacing="1" cellpadding="1" bgcolor="#F3F3F3" style="border-color:#0E56A2">
+                            <tr class="bluebg">
+                              <td class="pd brd"><input ng-model="checkkAll.value" ng-change="isSelectedAll()" name="" type="checkbox" value=""> <span class="sl">select all</span></td>
+                              <td class="pd brd">contact</td>
+                              <td class="pd brd">company</td>
+                              <td class="pd brd">info</td>
+                            </tr>
+                            <tr class="fadebg"  ng-repeat="conts in contacts track by $index">
+                              <td class="pd brd">
+                                  <div align="center">
+                                      <input name="" type="checkbox"  ng-model="selectStatus[$index]" ng-change="isSelected($index,conts.ID)">
+                                  </div>
+                              </td>
+                              <td class="pd brd"><a href="{{rootUrl}}mysite/newguid/contact/{{token}}_{{contacts[$index]['ID']}}_{{conts.FIRSTNAME.replace('?','')}}_{{conts.LASTNAME.replace('?','')}}.html" ng-click="contactClick($index)">{{conts.FIRSTNAME + " " +conts.LASTNAME}}</a> <br>
+                                <span class="blu">{{conts.TITLE}}</span>
+                               </td>
+                              <td class="pd brd"><a href="{{rootUrl}}mysite/newguid/company/{{conts.COMPANY}}.html" ng-click="companyClick(conts.COMPANY)">{{conts.COMPANY}}</a><br>
+                                  <span class="blu">{{conts.ADDRESS+","+conts.CITY+","+conts.STATE+","+conts.COUNTRY}}</span>
+                              </td>
+                              <td class="pd brd">{{conts.EMAIL}}</td>
+                            </tr>
+                          </table>
+
+                        
+                  </div>
+                  
+                  <hr ng-class=" stillSearching ? '' : 'opacity-searching'" style="border-color:#ccc"/>
+                   <div ng-class=" stillSearching ? 'dt-toolbar-footer' : 'dt-toolbar-footer opacity-searching'">
+                            <div class="col-sm-4 col-xs-12 hidden-xs">
+                                <div class="dataTables_info" id="tableExample_info" role="status" aria-live="polite">
+                                    <button type="button" style="color: #000000;margin-top: 20px;" ng-click="goBackToExports()" ng-show="!showInBarSearch">Go Back to Exports!</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-8">
+                                <div ng-show="pagingBar" class="dataTables_paginate paging_simple_numbers" id="tableExample_paginate">
+                                    <ul class="pagination">
+                                        <li class="paginate_button previous {{previousPaging}}" id="tableExample_previous" ng-click="currentIndex > 1 ? pagingClick(currentIndex-1):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="0" tabindex="0">Previous</a></li>
+                                        <li ng-show="showNext[0]" class="paginate_button {{acctive[0]}}" ng-click="acctive[0] === '' ?pagingClick(minPage):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="1" tabindex="0">{{minPage}}</a></li>
+                                        <li ng-show="showNext[1]" class="paginate_button {{acctive[1]}}" ng-click="textpage[1] !== '...'? pagingClick(textpage[1]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="2" tabindex="0">{{textpage[1]}}</a></li>
+                                        <li ng-show="showNext[2]" class="paginate_button {{acctive[2]}}" ng-click="acctive[2] === '' ?pagingClick(textpage[2]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="3" tabindex="0">{{textpage[2]}}</a></li>
+                                        <li ng-show="showNext[3]" class="paginate_button {{acctive[3]}}" ng-click="acctive[3] === '' ?pagingClick(textpage[3]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="4" tabindex="0">{{textpage[3]}}</a></li>
+                                        <li ng-show="showNext[4]" class="paginate_button {{acctive[4]}}" ng-click="acctive[4] === '' ?pagingClick(textpage[4]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="5" tabindex="0">{{textpage[4]}}</a></li>
+                                        <li ng-show="showNext[5]" class="paginate_button {{acctive[5]}}" ng-click="textpage[5] !== '...' ? pagingClick(textpage[5]):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="6" tabindex="0">{{textpage[5]}}</a></li>
+                                        <li ng-show="showNext[6]" class="paginate_button {{acctive[6]}}" ng-click="acctive[6] === '' ?pagingClick(maxPage):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="7" tabindex="0">{{maxPage}}</a></li>
+                                        <li class="paginate_button next {{nextPaging}}" id="tableExample_next" ng-click="currentIndex < maxPage ? pagingClick(currentIndex+1):console.log(null)"><a href="#" aria-controls="tableExample" data-dt-idx="8" tabindex="0">Next</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+           </div>  

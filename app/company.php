@@ -28,7 +28,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="../styles/css/fixes.css">
         <link rel="stylesheet" type="text/css" media="screen" href="../styles/css/smartadmin-rtl.min.css">
     </head>
-    <div ng-app="myapp" ng-controller="ContactCtrl" ng-init="companyInfomation='<?php echo rawurlencode(filter_input(INPUT_GET, 'name'));?>'">    
+    <body ng-app="myapp" ng-controller="ContactCtrl" ng-init="companyInfomation='<?php echo rawurlencode(filter_input(INPUT_GET, 'name'));?>'">    
         <div>
             <div class="widget-body">
             <hr class="simple">

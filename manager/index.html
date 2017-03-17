@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../app/js/md5.js"></script>
+        <script type="text/javascript" src="../app/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../app/js/jquery.cookie.js"></script>   
+        <script language="javascript" src="../app/js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/controler.js"></script>
+        <script type="text/javascript" src="../app/js/myjavascript.js"></script>
+    </head>
+    <body ng-app="addminapp" ng-controller="AdminCtrl">
+        <div>            
+            <button type="button" ng-click="gotologin()">login</button>
+            <button type="button" ng-click="gotoimport()">Import new data from CSV file</button>
+            <button type="button" ng-click="gotouser()">User manager</button>
+            <button type="button" ng-click="gotocontact()">Confirm Contact</button>
+            <button type="button" ng-click="gotocompany()">Confirm Company</button>
+        </div>
+    </body>
+</html>

@@ -32,12 +32,18 @@ class DBManager {
     var $numberResultPerPage = 20;
     var $userInfo; // = new UserDataBaseManager();
     var $rootUrl = "http://localhost/";
+    //var $rootUrl = "http://93.158.211.165/~tcshosting/";
 
     function DBManager() {
         $this->servername = "localhost";
         $this->username = "nguyenphong";
         $this->password = "123456789";
         $this->dbname = "nguyenphong";
+        /*
+        $this->username = "tcshosti_nguyenp";
+        $this->password = "1Kakashita";
+        $this->dbname = "tcshosti_nguyenphong";
+         */
         $this->connectSucessDataBase = FALSE;
         $this->userInfo = new UserDataBaseManager();
         $this->userInfo->Connect();
@@ -59,7 +65,6 @@ class DBManager {
 
     function login($userName, $password, $token, $userToken) {
         if ($this->connectSucessDataBase) {
-            $resetToken = TRUE;
             $sql = "SELECT ID,NAME,CREDIT,ACTIVITY,PLAN,DATE FROM USER WHERE ((ID = '$userName' || NAME = '$userName') && PASSWORD = '$password')";
             if (isset($userToken)) {
                 $userToken = mysqli_real_escape_string($this->conn, $userToken);
@@ -71,16 +76,11 @@ class DBManager {
                 $row = $results->fetch_assoc();
                 //return $this->userType[$row['PLAN']];
                 $ID = $row['ID'];
-                if ($resetToken) {
-                    $this->conn->query("UPDATE USER SET TOKEN = '$token' WHERE ID = '$ID'");
-                }else{
-                    $token = $userToken;
-                }
-                $row['TOKEN'] = $token;
-                if ($row['ACTIVITY'] === '' || $row['ACTIVITY'] === NULL) {
-                    $row['ACTIVITY'] = TRUE;
+                $this->conn->query("UPDATE USER SET TOKEN = '$token' WHERE ID = '$ID'");
+                if ($row['ACTIVITY'] === '1') {
+                    $row['TOKEN'] = $token;
                 } else {
-                    $row['ACTIVITY'] = FALSE;
+                    $row['TOKEN'] = '';
                 }
                 header('Content-type: application/json');
                 echo json_encode($row);
@@ -88,6 +88,33 @@ class DBManager {
                 echo -1;
             }
         }
+    }
+
+    function adminLogin($userName, $password, $token, $userToken) {
+        if ($this->connectSucessDataBase) {
+            $resetToken = TRUE;
+            $sql = "SELECT * FROM ADMIN WHERE (USERNAME = '$userName' && PASSWORD = '$password')";
+            if (isset($userToken)) {
+                $userToken = mysqli_real_escape_string($this->conn, $userToken);
+                $sql.=" || TOKEN = '$userToken'";
+                $resetToken = TRUE;
+            }
+            $results = $this->conn->query($sql);
+            if (mysqli_num_rows($results) == 1) {
+                $row = $results->fetch_assoc();
+                //return $this->userType[$row['PLAN']];
+                $ID = $row['USERNAME'];
+                if ($resetToken) {
+                    $this->conn->query("UPDATE ADMIN SET TOKEN = '$token' WHERE USERNAME = '$ID'");
+                }
+                echo $token;
+            } else {
+                echo -1;
+            }
+        }else{
+            echo -1;
+        }
+        
     }
     
     function activity($token) {
@@ -98,7 +125,7 @@ class DBManager {
                 $row = $results->fetch_assoc();
                 $ID = $row['ID'];
                 if ($this->userInfo->CreateTable(str_replace('.', 'dot', str_replace('@', 'acon', $ID)))) {
-                    if ($this->conn->query("UPDATE USER SET ACTIVITY = '' WHERE ID = '$ID'")) {
+                    if ($this->conn->query("UPDATE USER SET ACTIVITY = '1' WHERE ID = '$ID'")) {
                         echo 'your account has been activated successfully!';
                     } else {
                         echo 'error';
@@ -116,7 +143,7 @@ class DBManager {
     }
 
     function search($sizeParameter, $industriesParameter, $revenueParameter, $location_code, $page, $token, $locationParameter,
-            $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName) {
+            $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName, $mainSearch) {
         $sql = "SELECT * FROM INFOMATION , COMPANYINFOMATION "
                 . "WHERE INFOMATION.COMPANY = COMPANYINFOMATION.NAME ";
         if (isset($sizeParameter)) {
@@ -191,7 +218,18 @@ class DBManager {
             $companyName = mysqli_real_escape_string($this->conn, $companyName);
             $sql.="AND (INFOMATION.COMPANY LIKE '%$companyName%') ";
         }
-        
+        if(isset($mainSearch)){
+            $sql = "SELECT * FROM INFOMATION , COMPANYINFOMATION "
+                . "WHERE INFOMATION.COMPANY = COMPANYINFOMATION.NAME AND ( "
+                    . "(COMPANYINFOMATION.INDUSTRIES LIKE '%$mainSearch%')"
+                    . "OR (COMPANYINFOMATION.CITY LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.JOBTITLE LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.FIRSTNAME LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.LASTNAME LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.COMPANY LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.EMAIL LIKE '%$mainSearch%')"
+                    . ")";
+        }
         if ($this->connectSucessDataBase) {
 
             $arrayResults = array();
@@ -412,7 +450,7 @@ class DBManager {
     }
 
     function GetMaxResults($sizeParameter, $industriesParameter, $revenueParameter, $location_code,$locationParameter,
-            $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName) {
+            $levelParameter, $departmentParameter, $resultOnPage, $searchName, $jobTitle, $companyName, $mainSearch) {
         $sql = "SELECT COUNT(*) AS COUNT FROM INFOMATION , COMPANYINFOMATION "
                 . "WHERE INFOMATION.COMPANY = COMPANYINFOMATION.NAME ";
         if (isset($sizeParameter)) {
@@ -487,6 +525,18 @@ class DBManager {
             $companyName = mysqli_real_escape_string($this->conn, $companyName);
             $sql.="AND (INFOMATION.COMPANY LIKE '%$companyName%') ";
         }
+        if(isset($mainSearch)){
+            $sql = "SELECT COUNT(*) AS COUNT FROM INFOMATION , COMPANYINFOMATION "
+                . "WHERE INFOMATION.COMPANY = COMPANYINFOMATION.NAME AND ( "
+                    . "(COMPANYINFOMATION.INDUSTRIES LIKE '%$mainSearch%')"
+                    . "OR (COMPANYINFOMATION.CITY LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.JOBTITLE LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.FIRSTNAME LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.LASTNAME LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.COMPANY LIKE '%$mainSearch%')"
+                    . "OR (INFOMATION.EMAIL LIKE '%$mainSearch%')"
+                    . ")";
+        }
         if ($resultOnPage === '' ) {
             $resultOnPage = 25;
         }
@@ -504,17 +554,34 @@ class DBManager {
             //echo floor(mysqli_num_rows($results) / $this->numberResultPerPage);
             //echo $sql;
         }
+                 
     }
     
-    function updateContact($id, $firstName, $lastName, $jobTitle, $email, $userEmail){
+    function updateContact($id, $firstName, $lastName, $jobTitle, $email, $userEmail, $company){
         if ($this->connectSucessDataBase) {
             $userEmail .= (' at '.date('Y/m/d H:i:s'));
-            $sql = "INSERT INTO CONTACTUPDATE (EMAILUSER, ID, FIRSTNAME, LASTNAME, TITLE, EMAIL) VALUES ('$userEmail', '$id', '$firstName', '$lastName', '$jobTitle', '$email')";
+            $sql = "INSERT INTO CONTACTUPDATE (EMAILUSER, ID, COMPANY, FIRSTNAME, LASTNAME, TITLE, EMAIL) VALUES ('$userEmail', '$id', '$company', '$firstName', '$lastName', '$jobTitle', '$email')";
             if ($this->conn->query($sql) === TRUE) {
                 //readfile($this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
                 //echo ($this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
                 //echo "<script>window.location.href = '" . $this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html'";
-                header("Location: ".$this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
+                header("Location: ".$this->rootUrl . "mysite/newguid/thankforupdate.html");
+            } else {
+                echo "__".$this->conn->error;
+                //echo 0;
+            }
+        }
+    }
+    
+    function updatePass($id, $oldPass, $newPass){
+        if ($this->connectSucessDataBase) {
+            $token = md5($id.time());
+            $sql = "UPDATE USER SET PASSWORD = '$newPass', TOKEN = '$token' WHERE (ID = '$id' && PASSWORD = '$oldPass')";
+            if ($this->conn->query($sql) === TRUE) {
+                //readfile($this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
+                //echo ($this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
+                //echo "<script>window.location.href = '" . $this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html'";
+                echo mysqli_affected_rows($this->conn);
             } else {
                 echo "__".$this->conn->error;
                 //echo 0;
@@ -531,7 +598,7 @@ class DBManager {
                     . "'$companyState', '$companyZip', '$companyCountry', '$companyWebsite', '$companySizeUpdate', '$companyRevenueUpdate',"
                     . "'','$companyIndustry')";
             if ($this->conn->query($sql) === TRUE) {
-                header("Location: ".$this->rootUrl . "mysite/demo_project/app/thankforyourupdate.html");
+                header("Location: ".$this->rootUrl . "mysite/newguid/thankforupdate.html");
             } else {
                 echo "__".$this->conn->error;
                 //echo 0;
@@ -575,7 +642,286 @@ class DBManager {
             }
         }
     }
-
+    
+    function IsAdmin($token){
+        if($this->connectSucessDataBase){
+            $sql = "SELECT * FROM ADMIN WHERE TOKEN = '$token'";
+            
+            $results = $this->conn->query($sql);
+            if($results === FALSE)
+                return FALSE;
+            if (mysqli_num_rows($results) == 1) {
+                return TRUE;
+            } else {
+                //echo $this->conn->error;
+                return FALSE;
+            }
+        }
+    }
+    
+    function ConfirmUpdateCompany($arrayCompany, $adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $listID = $this->getSqlStringPart(array_unique($arrayCompany));
+            $sql = "UPDATE COMPANYINFOMATION, COMPANYUPDATE "
+                    . "SET "
+                    . "COMPANYINFOMATION.NAME = COMPANYUPDATE.NAME,"
+                    . "COMPANYINFOMATION.PHONE = COMPANYUPDATE.PHONE,"
+                    . "COMPANYINFOMATION.ADDRESS = COMPANYUPDATE.ADDRESS,"
+                    . "COMPANYINFOMATION.CITY = COMPANYUPDATE.CITY,"
+                    . "COMPANYINFOMATION.STATE = COMPANYUPDATE.STATE,"
+                    . "COMPANYINFOMATION.ZIP = COMPANYUPDATE.ZIP,"
+                    . "COMPANYINFOMATION.COUNTRY = COMPANYUPDATE.COUNTRY,"
+                    . "COMPANYINFOMATION.URL = COMPANYUPDATE.URL,"
+                    . "COMPANYINFOMATION.SIZE = COMPANYUPDATE.SIZE,"
+                    . "COMPANYINFOMATION.REVENUE = COMPANYUPDATE.REVENUE,"
+                    . "COMPANYINFOMATION.OWNERSHIP = COMPANYUPDATE.OWNERSHIP,"
+                    . "COMPANYINFOMATION.INDUSTRIES = COMPANYUPDATE.INDUSTRIES "
+                    . "WHERE COMPANYUPDATE.OLDNAME IN $listID AND COMPANYINFOMATION.NAME = COMPANYUPDATE.OLDNAME";
+            if ($this->conn->query($sql) === TRUE) {
+                $sql = "UPDATE INFOMATION, COMPANYUPDATE SET "
+                        . "INFOMATION.COMPANY = COMPANYUPDATE.NAME "
+                        . "WHERE COMPANYUPDATE.OLDNAME IN $listID AND INFOMATION.COMPANY = COMPANYUPDATE.OLDNAME";
+                if ($this->conn->query($sql) === TRUE) 
+                {
+                    $sql = "DELETE FROM COMPANYUPDATE "
+                        . "WHERE COMPANYUPDATE.OLDNAME IN $listID";
+                    if ($this->conn->query($sql) === TRUE) 
+                    {
+                        echo 'data update success!!';
+                    }else 
+                    echo $sql."_____".$this->conn->error;
+                }else 
+                echo $sql."_____".$this->conn->error;
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function ConfirmUpdateContact($arrayUser, $adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $listID = $this->getSqlStringPart(array_unique($arrayUser));
+            $sql = "UPDATE INFOMATION, CONTACTUPDATE SET "
+                    . "INFOMATION.FIRSTNAME = CONTACTUPDATE.FIRSTNAME,"
+                    . "INFOMATION.LASTNAME = CONTACTUPDATE.LASTNAME,"
+                    . "INFOMATION.TITLE = CONTACTUPDATE.TITLE,"
+                    . "INFOMATION.EMAIL = CONTACTUPDATE.EMAIL "
+                    . "WHERE CONTACTUPDATE.ID IN $listID AND INFOMATION.ID = CONTACTUPDATE.ID";
+            if ($this->conn->query($sql) === TRUE) {
+                $sql = "DELETE FROM CONTACTUPDATE "
+                    . "WHERE CONTACTUPDATE.ID IN $listID";
+                if ($this->conn->query($sql) === TRUE) {
+                    echo 'data update success!!';
+                } else {
+                    echo $sql."_____".$this->conn->error;
+                    //return FALSE;
+                }
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function AddCompany($adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $sql = "LOAD DATA LOCAL INFILE 'csv/COMPANY.csv' INTO TABLE COMPANYINFOMATION "
+                    . "FIELDS TERMINATED BY ','  ENCLOSED BY '\"'  ESCAPED BY '\"'  LINES TERMINATED BY '\r\n' "
+                    . "IGNORE 1 LINES";
+                    //. "(NAME, PHONE, ADDRESS, CITY, STATE, ZIP, COUNTRY, URL, SIZE, REVENUE, OWNERSHIP, INDUSTRIES);";
+            if ($this->conn->query($sql) === TRUE) {
+                echo TRUE;
+            } else {
+                echo $this->conn->error;
+                //return FALSE;
+            }
+        }
+    }
+    
+    function AddUser($adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $sql = "LOAD DATA LOCAL INFILE 'csv/CONTACT.csv' INTO TABLE INFOMATION "
+                    . "FIELDS TERMINATED BY ','  ENCLOSED BY '\"'  ESCAPED BY '\"'  LINES TERMINATED BY '\r\n' "
+                    . "IGNORE 1 LINES";
+                    //. "(NAME, PHONE, ADDRESS, CITY, STATE, ZIP, COUNTRY, URL, SIZE, REVENUE, OWNERSHIP, INDUSTRIES);";
+            if ($this->conn->query($sql) === TRUE) {
+                echo TRUE;
+            } else {
+                echo $this->conn->error;
+                //return FALSE;
+            }
+        }
+    }
+    
+    function CleanFieldOfContact($name){
+        if($this->connectSucessDataBase){
+            $sql = "UPDATE INFOMATION SET $name = REPLACE(REPLACE(LTRIM(RTRIM($name)), CHAR(13), ''), CHAR(10), '')";
+                    //. "(NAME, PHONE, ADDRESS, CITY, STATE, ZIP, COUNTRY, URL, SIZE, REVENUE, OWNERSHIP, INDUSTRIES);";
+            if ($this->conn->query($sql) === TRUE) {
+                echo TRUE;
+            } else {
+                echo $this->conn->error;
+                //return FALSE;
+            }
+        }
+    }
+    
+    function CleanFieldOfCompany($name){
+        if($this->connectSucessDataBase){
+            $sql = "UPDATE COMPANYINFOMATION SET $name = REPLACE(REPLACE(LTRIM(RTRIM($name)), CHAR(13), ''), CHAR(10), '')";
+                    //. "(NAME, PHONE, ADDRESS, CITY, STATE, ZIP, COUNTRY, URL, SIZE, REVENUE, OWNERSHIP, INDUSTRIES);";
+            if ($this->conn->query($sql) === TRUE) {
+                echo TRUE;
+            } else {
+                echo $this->conn->error;
+                //return FALSE;
+            }
+        }
+    }
+    
+    function GetUserUpdate($page,$token){
+        if($this->connectSucessDataBase && $this->IsAdmin($token)
+                ){
+            $sql = "SELECT * FROM CONTACTUPDATE ";
+            $resultss = $this->conn->query($sql);
+            if ($resultss !== FALSE) {
+                $arrayResults = array();
+                while ($row = $resultss->fetch_assoc()) {
+                    array_push($arrayResults, $row);
+                }
+                header('Content-type: application/json');
+                echo json_encode($arrayResults);
+            } else {
+                //echo $sql."_________".$this->conn->error;
+                //return FALSE;
+                echo '-1';
+            }
+        }else echo '-1';
+    }
+    
+    function GetCompanyUpdate($page,$token){
+        if($this->connectSucessDataBase && $this->IsAdmin($token)
+                ){
+            $sql = "SELECT "
+                    . "EMAILUSER AS EMAILUSER,"
+                    . "OLDNAME AS ID,"
+                    . "NAME AS NAME,"
+                    . "PHONE AS PHONE,"
+                    . "ADDRESS AS ADDRESS,"
+                    . "CITY AS CITY,"
+                    . "STATE AS STATE,"
+                    . "ZIP AS ZIP,"
+                    . "COUNTRY AS COUNTRY,"
+                    . "URL AS URL,"
+                    . "SIZE AS SIZE,"
+                    . "REVENUE AS REVENUE,"
+                    . "OWNERSHIP AS OWNERSHIP,"
+                    . "INDUSTRIES AS INDUSTRIES "
+                    . "FROM COMPANYUPDATE ";
+            $resultss = $this->conn->query($sql);
+            if ($resultss !== FALSE) {
+                $arrayResults = array();
+                while ($row = $resultss->fetch_assoc()) {
+                    array_push($arrayResults, $row);
+                }
+                header('Content-type: application/json');
+                echo json_encode($arrayResults);
+            } else {
+                //echo $sql."_________".$this->conn->error;
+                //return FALSE;
+                echo '-1';
+            }
+        }else echo '-1';
+    }
+    function GetUserList($page,$token){
+        if($this->connectSucessDataBase && $this->IsAdmin($token)
+                ){
+            $sql = "SELECT * FROM USER ";
+            $resultss = $this->conn->query($sql);
+            if ($resultss !== FALSE) {
+                $arrayResults = array();
+                while ($row = $resultss->fetch_assoc()) {
+                    if($row['ACTIVITY'] === '0')
+                        $row['ACTIVITY'] = 'BANNED';
+                    else $row['ACTIVITY'] = 'ACTIVITY';
+                    array_push($arrayResults, $row);
+                }
+                header('Content-type: application/json');
+                echo json_encode($arrayResults);
+            } else {
+                //echo $sql."_________".$this->conn->error;
+                //return FALSE;
+                echo '-1';
+            }
+        }else echo '-1';
+    }
+    
+    function BanUser($arrayCompany, $adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $listID = $this->getSqlStringPart(array_unique($arrayCompany));
+            $sql = "UPDATE USER SET ACTIVITY = 0 WHERE ID IN $listID";
+            if ($this->conn->query($sql) === TRUE) {
+                echo 'data update success!!';
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function UnBanUser($arrayCompany, $adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){
+            $listID = $this->getSqlStringPart(array_unique($arrayCompany));
+            $sql = "UPDATE USER SET ACTIVITY = 1 WHERE ID IN $listID";
+            if ($this->conn->query($sql) === TRUE) {
+                echo 'data update success!!';
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function DeleteUser($arrayCompany, $adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){ 
+            $listID = $this->getSqlStringPart(array_unique($arrayCompany));
+            $sql = "DELETE FROM USER WHERE ID IN $listID";
+            if ($this->conn->query($sql) === TRUE) {
+                foreach ($arrayCompany as &$value) {
+                    $this->userInfo->DropTable($value);
+                }
+                echo 'data update success!!';
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function DeleteContactUpdate($adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){ 
+            $sql = "DELETE FROM CONTACTUPDATE WHERE 1";
+            if ($this->conn->query($sql) === TRUE) {
+                echo 'data update success!!';
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
+    
+    function DeleteCompanyUpdate($adminToken){
+        if($this->connectSucessDataBase && $this->IsAdmin($adminToken)){ 
+            $sql = "DELETE FROM COMPANYUPDATE WHERE 1";
+            if ($this->conn->query($sql) === TRUE) {
+                echo 'data update success!!';
+            } else {
+                echo $sql."_____".$this->conn->error;
+                //return FALSE;
+            }
+        }else            echo 'not admin';
+    }
 }
 
 ?>

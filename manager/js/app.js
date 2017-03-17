@@ -1,0 +1,1 @@
+var addminapp = angular.module('addminapp', []);

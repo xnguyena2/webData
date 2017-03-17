@@ -32,12 +32,15 @@
 			</thead>
 			<tbody>
 				<tr class="info-text" ng-repeat="conts in contacts track by $index">
-					<td style="
-			  color: #227EA5;"><input type="checkbox" ng-model="selectStatus[$index]" ng-change="isSelected($index,conts.ID)"></td>
-					<td style="
-			  color: #227EA5;"><a href="{{rootUrl}}mysite/testguid/contact/{{token}}_{{contacts[$index]['ID']}}_{{conts.FIRSTNAME.replace('?','')}}_{{conts.LASTNAME.replace('?','')}}.html" ng-click="contactClick($index)">{{conts.FIRSTNAME + " " +conts.LASTNAME}}</a><br/>{{conts.TITLE}}</td>
-					<td style="
-						color: #227EA5;"><a href="{{rootUrl}}mysite/testguid/company/{{conts.COMPANY}}.html" ng-click="companyClick(conts.COMPANY)">{{conts.COMPANY}}</a><br/>{{conts.ADDRESS+","+conts.CITY+","+conts.STATE+","+conts.COUNTRY}}</td>
+					<td style="color: #227EA5;">
+                                            <input type="checkbox" ng-model="selectStatus[$index]" ng-change="isSelected($index,conts.ID)">
+                                        </td>
+					<td style="color: #227EA5;">
+                                            <a href="{{rootUrl}}mysite/testguid/contact/{{token}}_{{contacts[$index]['ID']}}_{{conts.FIRSTNAME.replace('?','')}}_{{conts.LASTNAME.replace('?','')}}.html" ng-click="contactClick($index)">{{conts.FIRSTNAME + " " +conts.LASTNAME}}</a><br/>{{conts.TITLE}}
+                                        </td>
+					<td style="color: #227EA5;">
+                                            <a href="{{rootUrl}}mysite/testguid/company/{{conts.COMPANY}}.html" ng-click="companyClick(conts.COMPANY)">{{conts.COMPANY}}</a><br/>{{conts.ADDRESS+","+conts.CITY+","+conts.STATE+","+conts.COUNTRY}}
+                                        </td>
 					<td>{{conts.EMAIL}}</td>
 			  </tr>
 			</tbody>

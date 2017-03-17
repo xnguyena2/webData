@@ -31,6 +31,11 @@ class UserDataBaseManager {
         $this->username = "nguyenphong";
         $this->password = "123456789";
         $this->dbname = "userinfomation";
+        /*
+        $this->username = "tcshosti_nguyenp";
+        $this->password = "1Kakashita";
+        $this->dbname = "tcshosti_nguyenphong";
+         */
         $this->connectSucessDataBase = FALSE;
     }
 
@@ -120,6 +125,14 @@ class UserDataBaseManager {
                 //return FALSE;
                 echo $this->conn->error;
             }
+        }
+    }
+    
+    function DropTable($name){
+        if ($this->connectSucessDataBase) {  
+            $sql = "DROP TABLE IF EXISTS ".emailToNameTable($name);
+            if(!$this->conn->query($sql))
+                echo $this->conn->error;
         }
     }
 

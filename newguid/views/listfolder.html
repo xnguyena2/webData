@@ -1,0 +1,25 @@
+<div class="bright">
+    <h3><span class="bluee"> My Folder</span></h3>
+
+        <table width="100%" border="1" cellspacing="1" cellpadding="1" bgcolor="#F3F3F3" style="border-color:#0E56A2">
+            <tr class="bluebg" style="text-align:left">
+              <td class="pd brd">name</td>
+              <td class="pd brd">contact</td>
+              <td class="pd brd"></td>
+              <td class="pd brd"></td>
+            </tr>
+            <tr class="fadebg" ng-repeat="folder in folders track by $index">
+              <td class="pd brd"><a href="">{{folder.FOLDER}}</a> <br>
+               </td>
+              <td class="pd brd"><a href="">{{folder.COUNT}}</a><br>
+              </td>
+              <td class="pd brd">
+                                     <a href=""><div ng-click="getCVSFile(folder.FOLDER,folder.COUNT,0,false)" class="xportbtn">View List</div></a>
+              </td>
+              <td class="pd brd">
+                                     <a href=""><div ng-click="getCVSFile(folder.FOLDER,folder.COUNT,-1,true)" class="xportbtn">Export</div></a>
+              </td>
+            </tr>
+      </table>
+
+  </div>

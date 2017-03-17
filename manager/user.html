@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script type="text/javascript" src="../app/js/md5.js"></script>
+        <script type="text/javascript" src="../app/js/jquery.min.js"></script>
+        <script type="text/javascript" src="../app/js/jquery.cookie.js"></script>   
+        <script language="javascript" src="../app/js/angular.min.js"></script>
+        <script type="text/javascript" src="js/app.js"></script>
+        <script type="text/javascript" src="js/controler.js"></script>
+        <script type="text/javascript" src="../app/js/myjavascript.js"></script>
+    </head>
+    <body ng-app="addminapp" ng-controller="AdminCtrl">
+        <div>
+            <button type="button" ng-click="getUserlist()">show</button>
+            <button type="button" ng-click="banUser()">ban</button>
+            <button type="button" ng-click="unbanUser()">unban</button>
+            <button type="button" ng-click="deleteUser()">deleteUser</button>
+        </div>
+        <div>
+            <table width="100%" border="1" cellspacing="1" cellpadding="1" bgcolor="#F3F3F3" style="border-color:#0E56A2">
+                <tr class="bluebg">
+                    <td class="pd brd"><input ng-model="checkkAll.value" ng-change="isSelectedAll()" name="" type="checkbox" value=""> <span class="sl">select all</span></td>
+                    <td class="pd brd">EMAIL</td>
+                    <td class="pd brd">USER NAME</td>
+                    <td class="pd brd">CREDIT</td>
+                    <td class="pd brd">ACTIVITY</td>
+                    <td class="pd brd">PLAN</td>
+                    <td class="pd brd">DATE</td>
+                </tr>
+                <tr class="fadebg"  ng-repeat="conts in contacts track by $index">
+                    <td class="pd brd">
+                        <div align="center">
+                            <input name="" type="checkbox"  ng-model="selectStatus[$index]" ng-change="isSelected($index,conts.ID)">
+                        </div>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.ID}}</span>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.NAME}}</span>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.CREDIT}}</span>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.ACTIVITY}}</span>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.PLAN}}</span>
+                    </td>
+                    <td class="pd brd">
+                        <span class="blu">{{conts.DATE}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

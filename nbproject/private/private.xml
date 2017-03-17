@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/mysite/testguid/css/mystyle.css</file>
-            <file>file:/C:/xampp/htdocs/mysite/app/views/listexportcontact.html</file>
-            <file>file:/C:/xampp/htdocs/mysite/app/views/mycredit.html</file>
-            <file>file:/C:/xampp/htdocs/mysite/app/js/myjavascript.js</file>
-            <file>file:/C:/xampp/htdocs/mysite/app/controllers/contact-controller.js</file>
-            <file>file:/C:/xampp/htdocs/mysite/app/views/paypalsubcrision.html</file>
-            <file>file:/C:/xampp/htdocs/mysite/testguid/index.html</file>
-            <file>file:/C:/xampp/htdocs/mysite/testguid/mycredit.html</file>
-            <file>file:/C:/xampp/htdocs/mysite/testguid/myfolder.html</file>
+            <file>file:/C:/xampp/htdocs/mysite/onlyforblockchain/transaction.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/onlyforblockchain/DBManager.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/api/DBManager.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/onlyforblockchain/login.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/api/adminlogin.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/onlyforblockchain/signup.php</file>
+            <file>file:/C:/xampp/htdocs/mysite/onlyforblockchain/getblance.php</file>
         </group>
     </open-files>
 </project-private>

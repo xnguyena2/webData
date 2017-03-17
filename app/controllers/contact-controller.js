@@ -49,7 +49,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         $scope.scribOn = '';       
         
         $scope.rootUrl = rootUrl;
-        $scope.leftPanel = rootUrl+'mysite/app/views/leftpanel.tpl.html';
+        $scope.leftPanel = rootUrl+'mysite/newguid/views/leftpanel.html';
+        $scope.topbar = rootUrl+'mysite/newguid/views/topbar.html';
         $scope.updateContactForm = rootUrl+'mysite/app/views/contactupdateform.html';
         $scope.updateCompanyForm = rootUrl+'mysite/app/views/companyupdateform.html';
         $scope.paypalSubcription = rootUrl+'mysite/app/views/paypalsubcrision.html';
@@ -66,9 +67,9 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 },
                 url: rootUrl+"mysite/api/login.php",
                 success: function (response) {
+                    console.log(response);
                     if (response !== '-1') {
-                        //console.log(response);
-                        if(response['ACTIVITY']){
+                        if(response['ACTIVITY'] === '1'){
                             $scope.isLogin = true;
                             $.cookie('TOKEN', response['TOKEN'], {expires: 7, path: '/'});
                             $scope.userID = response['ID'];
@@ -85,10 +86,19 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                             $scope.dropDownValue = [
                                 {id:'25', value:25}
                             ];
-                            alert('you have to vertify your email first!');
+                            if(response['ACTIVITY'] === '0'){
+                                $.cookie('TOKEN', '', {expires: 7, path: '/'});
+                                alert('your account has been banned!');
+                            }
+                            else
+                                alert('you have to vertify your email first!');
                         }
                     }
                     else{
+                        if($.cookie('TOKEN') === 'ban'){
+                            $.cookie('TOKEN', '', {expires: 7, path: '/'});
+                            alert('your account has been banned!');
+                        }
                         $scope.dropDownValue = [
                             {id:'25', value:25}
                         ];
@@ -117,7 +127,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         
         $scope.contactClick = function($index){
             //window.location.href = rootUrl+"mysite/app/contact/"+$scope.token+"_"+$scope.contacts[$index]['ID']+".html";
-            window.location.href = rootUrl+"mysite/testguid/contact/"+$scope.token+"_"+$scope.contacts[$index]['ID']+".html";
+            window.location.href = rootUrl+"mysite/newguid/contact/"+$scope.token+"_"+$scope.contacts[$index]['ID']+".html";
         }
         
         $scope.logOut = function(){
@@ -126,11 +136,11 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         }
         
         $scope.showLoginForm = function () {
-            window.location.href = rootUrl+"mysite/testguid/login/login.html";            
+            window.location.href = rootUrl+"mysite/newguid/login.html";            
         }
         
         $scope.showSignUpForm = function () {            
-            window.location.href = rootUrl+"mysite/testguid/login/signup.html";            
+            window.location.href = rootUrl+"mysite/newguid/signup.html";            
         }
 
         $scope.checkboxSize = {
@@ -225,7 +235,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             }
         }
         
-        $scope.pagingClick = function (page){
+        $scope.pagingClick = function (page,mainSearch){
             if(!$scope.searchAtBegin){
                 $scope.selectHistoryArray[($scope.currentIndex - 1)] = $scope.selectStatus.slice();
                 //console.log($scope.selectHistoryArray);
@@ -307,10 +317,10 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             if(!$scope.showInBarSearch){
                 //console.log("ddddddddddddddd");
                 $scope.getCVSFile($scope.currentFolder,$scope.currentCount,$scope.currentIndex-1,false);
-            }else {                
+            }else {
                 if($scope.isSearchAdvance)
                     $scope.searchPress($scope.currentIndex-1, false);
-                else $scope.searchPress($scope.currentIndex-1, false, $('#searchTextInput').val());
+                else $scope.searchPress($scope.currentIndex-1, false, $scope.resultSearchFliter,mainSearch);
             }        
         }
         
@@ -407,7 +417,9 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                         $scope.companyCity = $scope.company['CITY'];
                         $scope.companyZip = $scope.company['ZIP'];
                         $scope.companyWebsite = $scope.company['URL'];
+                        $scope.companyNameOld = $scope.companyName;
                         $scope.mainContain = rootUrl+"mysite/app/views/testcompany.html";
+                        $scope.topbar = rootUrl+'mysite/newguid/views/topbar.html';
                     }
                 });
             }
@@ -425,6 +437,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                     console.log(response);
                     $scope.contacts = response;
                     $scope.showContactInfomation(0);
+                    $scope.topbar = rootUrl+'mysite/newguid/views/topbar.html';
                 });
             }
         });
@@ -435,6 +448,39 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 $scope.mainContain = rootUrl+"mysite/app/views/thank.html";         
             }
         });
+        
+        $scope.updatePassword = function(){
+            if($scope.newPassword && $scope.oldPassword){
+                if($scope.newPassword.length<6){
+                    $scope.changepasswordnotice = 'Password length must more than 6 character!';
+                }
+                else if($scope.newPassword === $scope.confirmPassword){
+                    $.ajax({
+                        type: "POST",
+                        data: {
+                            id: $scope.userID,
+                            oldpassword: CryptoJS.MD5($scope.oldPassword).toString(),
+                            newpassword: CryptoJS.MD5($scope.newPassword).toString()
+                        },
+                        url: rootUrl+"mysite/api/updatepassword.php",
+                        success: function (response) {
+                            //console.log(response);
+                            if(response === '1'){
+                                window.location.href = rootUrl+"mysite/newguid/login.html";
+                            }else {
+                                $scope.changepasswordnotice = "Old password incorrect!";
+                                $scope.$apply();
+                            }
+                        }
+                    });
+                }else {
+                    $scope.changepasswordnotice = 'Confirm new password again!';
+                }
+            }else
+            {
+                $scope.changepasswordnotice = 'Fill all field!';
+            }
+        }
         
         $scope.checkedJobLevel = function () {
             var count_checked = $('[name="role_level"]:checked').length;
@@ -552,6 +598,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         $scope.showInBarSearch = true;
         $scope.contactInfo = {
             ID: '',
+            COMPANY: '',
             FIRSTNAME: '',
             LASTNAME: '',
             TITLE: '',
@@ -590,6 +637,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         $scope.showContactInfomation = function ($name) {
             $scope.contactInfo = {
                 ID: $scope.contacts[$name]['ID'],
+                COMPANY: $scope.contacts[$name]['COMPANY'],
                 FIRSTNAME: $scope.contacts[$name]['FIRSTNAME'],
                 LASTNAME: $scope.contacts[$name]['LASTNAME'],
                 TITLE: $scope.contacts[$name]['TITLE'],
@@ -606,6 +654,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 $scope.contactInfo['JOBTITLE']='Undefined';
             if($scope.contactInfo['PROFILECOUNTRY']==='')
                 $scope.contactInfo['PROFILECOUNTRY']='Undefined';
+            if($scope.contactInfo['COMPANY']==='')
+                $scope.contactInfo['COMPANY']='Undefined';
             $scope.company = {
                 ADDRESS: $scope.contacts[$name]['ADDRESS'],
                 CITY: $scope.contacts[$name]['CITY'],
@@ -625,7 +675,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         
         $scope.companyClick = function($name){
             //window.location.href = rootUrl+"mysite/app/company/"+$name+".html";
-            window.location.href = rootUrl+"mysite/testguid/company/"+$name+".html";
+            window.location.href = rootUrl+"mysite/newguid/company/"+$name+".html";
         }
 
         $scope.showCompany = function ($name) {
@@ -657,6 +707,12 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 $scope.jobTitleLevel.splice(0, $scope.jobTitleLevel.length);
             //console.log($scope.jobTitleLevel);
             
+        }
+        
+        $scope.gotoMainPage = function(){
+            //console.log($scope.mainSearch);
+            $scope.saveState(0,$scope.resultSearchFliter,$scope.mainSearch);
+            window.location.href = rootUrl+"mysite/newguid/index.html";
         }
         
         $scope.getDepartment = function(){
@@ -729,17 +785,33 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             $scope.checkboxSize.size3 = false;
             $scope.checkboxSize.size4 = false;
             $scope.checkboxSize.size5 = false;
+            $scope.resultSearchFliter = '';
             $scope.jobTitleFliter = '';
             $scope.companyFliter = '';
             $scope.location_code = '';
+            $scope.mainSearch = '';
             //$scope.$apply();
         }
-        $scope.enterPress = function(event){
+        $scope.enterPress = function(event,mainSearch){
             if(event.which === 13){
-                $scope.searchPress(0,true);
+                    //console.log($scope.searchHistory);
+                if(mainSearch){
+                    //$scope.searchPress(0,true,'',$scope.mainSearch);  
+                    if($scope.searchHistory)
+                        $scope.searchPress(0,true,'',$scope.mainSearch);      
+                    else
+                        $scope.gotoMainPage();
+                }
+                else //$scope.searchPress(0,true);
+                {
+                    if($scope.searchHistory)
+                        $scope.searchPress(0,true);
+                    else
+                        $scope.gotoMainPage();
+                }
             }
         }
-        
+                
         $scope.dropDownChange = function(){
             //console.log('change');
             if($scope.isSearchPress)
@@ -749,13 +821,13 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         
         $scope.searchOnTablePress = function(){
             $scope.isSearchAdvance = false;
-            $scope.searchPress(0,true,$('#searchTextInput').val());
+            $scope.searchPress(0,true,$scope.resultSearchFliter);
         }
         
         $scope.searchResultEnter = function(event) {
             if(event.which === 13){
                 $scope.isSearchAdvance = false;
-                $scope.searchPress(0,true,$('#searchTextInput').val());
+                $scope.searchPress(0,true,$scope.resultSearchFliter);
             }
         }
         
@@ -765,8 +837,18 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             $scope.isSearchAdvance = true;
            $scope.searchPress(pages,isReset);
         }
+        
+        $scope.stillSearching = false;
+        $scope.finishedHalftSearch = false;
 
-        $scope.searchPress = function (pages, isReset, searchName) {
+        $scope.searchPress = function (pages, isReset, searchName, mainSearch) {
+            
+            $scope.stillSearching = false;
+            $scope.finishedHalftSearch = false;
+            if(!$scope.searchHistory){
+                $scope.gotoMainPage();
+                return;
+            }
             
             var resultOnPage = $('#selectNumberDropDown :selected').text();
             if($scope.searchAtBegin){
@@ -774,6 +856,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             }
             if(searchName === '')
                 searchName = undefined;
+            if(mainSearch === '')
+                mainSearch = undefined;
             if(pages<0)
                 pages = 0;
             if($scope.location_code === '')
@@ -786,7 +870,10 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             $scope.checkkAll.value = false;
             $scope.showInBarSearch = true;
             $scope.isSearchPress = true;
+            if(isReset)
+                $scope.currentIndex = 1;
             if(isReset || $scope.searchAtBegin){
+                
                 if(!$scope.searchAtBegin){
                     $scope.getJobLevel();
                     $scope.getLocation();
@@ -821,7 +908,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                         resultOnPage: resultOnPage,
                         searchName: searchName,
                         jobTitle: $scope.jobTitleFliter,
-                        companyName: $scope.companyFliter
+                        companyName: $scope.companyFliter,
+                        mainSearch: mainSearch
                     },
                     url: rootUrl+"mysite/api/search.php",
                     success: function (response) {
@@ -837,6 +925,10 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                             $scope.updatePagging();
                             $scope.searchAtBegin = false;
                         }
+                        if($scope.finishedHalftSearch){
+                            $scope.stillSearching = true;
+                        }
+                        $scope.finishedHalftSearch = true;
                         $scope.$apply();
                     }
                 });
@@ -856,7 +948,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                     resultOnPage: resultOnPage,
                     searchName: searchName,
                     jobTitle: $scope.jobTitleFliter,
-                    companyName: $scope.companyFliter
+                    companyName: $scope.companyFliter,
+                    mainSearch: mainSearch
                 },
                 url: rootUrl+"mysite/api/search.php",
                 success: function (response) {
@@ -884,17 +977,9 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                             $scope.acctive = ['active','','','','','disabled',''];
                             $scope.textpage = ['1','2','3','4','5','...',$scope.maxPage];
                             $scope.checkkAll.value = false;
-                            //$scope.saveState(pages);
                             //$scope.loadState();
                             //console.log($scope.postionLocation);
                             //console.log(JSON.parse(JSON.stringify($scope.postionLocation)));
-                        }
-                        //if(!$scope.searchAtBegin)
-                        {
-                            $scope.saveState(pages,searchName);
-                        }
-                        if($scope.searchAtBegin){
-                            $scope.resetState();
                         }
                     }
                     else {
@@ -902,12 +987,26 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                         console.log(response);
                         alert('SignUp to search more!!');
                     }
+                    if($scope.finishedHalftSearch || !isReset){
+                        $scope.stillSearching = true;
+                    }
+                    $scope.finishedHalftSearch = true;
                     $scope.$apply();
                 }
             });
+            /*
+            if($scope.searchAtBegin){
+                $scope.resetState();
+                searchName = '';
+                mainSearch = '';
+            }*/
+            //if(!$scope.searchAtBegin)
+            {
+                $scope.saveState(pages,searchName,mainSearch);
+            }
         };
         
-        $scope.saveState = function(pages,searchName){
+        $scope.saveState = function(pages,searchName,mainSearch){
             $.cookie('sizeParameter', JSON.stringify($scope.sizeParameter), {expires: 7, path: '/'});
             $.cookie('industriesParameter', JSON.stringify($scope.industriesParameter), {expires: 7, path: '/'});
             $.cookie('revenueParameter', JSON.stringify($scope.revenueParameter), {expires: 7, path: '/'});
@@ -918,6 +1017,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             $.cookie('page', JSON.stringify(pages), {expires: 7, path: '/'});
             $.cookie('resultOnPage', JSON.stringify($('#selectNumberDropDown :selected').text()), {expires: 7, path: '/'});            
             $.cookie('searchName', JSON.stringify(searchName), {expires: 7, path: '/'});
+            $.cookie('mainSearch', JSON.stringify(mainSearch), {expires: 7, path: '/'});
             $.cookie('jobTitle', JSON.stringify($scope.jobTitleFliter), {expires: 7, path: '/'});
             $.cookie('companyName', JSON.stringify($scope.companyFliter), {expires: 7, path: '/'});
             $.cookie('canback', JSON.stringify(1), {expires: 7, path: '/'});
@@ -935,6 +1035,8 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
             $scope.resultSearchFliter = '';
             $scope.jobTitleFliter = '';
             $scope.companyFliter = '';
+            $scope.searchText = '';
+            $scope.mainSearch = '';
         }
         $scope.contactShowOnPage = 25;
         $scope.currentPages = 0;
@@ -1014,6 +1116,14 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                         $scope.resultSearchFliter = JSON.parse($scope.resultSearchFliter);
                     }else $scope.resultSearchFliter = '';
                 }else $scope.resultSearchFliter = '';
+                
+                
+                $scope.mainSearch = $.cookie('mainSearch');                        
+                if($scope.mainSearch){
+                    if($scope.mainSearch !== 'undefined'){
+                        $scope.mainSearch = JSON.parse($scope.mainSearch);
+                    }else $scope.mainSearch = '';
+                }else $scope.mainSearch = '';
 
                 $scope.jobTitleFliter = $.cookie('jobTitle');
                 if($scope.jobTitleFliter){
@@ -1045,13 +1155,13 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 console.log($scope.companyFliter);*/
                 
                 $scope.searchAtBegin = true;
-                $scope.pagingClick($scope.currentIndex+1);
+                $scope.pagingClick($scope.currentIndex+1,$scope.mainSearch);
                 /*if($scope.resultSearchFliter !== ''){
                     $scope.searchPress($scope.currentPages,true,$scope.resultSearchFliter);
                 }else {
                     $scope.searchPress($scope.currentPages,true);
                 }*/
-                
+                //console.log('mainsearch:'+$scope.mainSearch);
                 $.cookie('canback', JSON.stringify(0), {expires: 7, path: '/'});
             }
         }
@@ -1108,13 +1218,14 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         }
         
         $scope.goBackToExports = function(){
-            $scope.myFolderPage = rootUrl+"mysite/app/views/myfolder.html";            
+            $scope.myFolderPage = rootUrl+"mysite/newguid/views/listfolder.html";            
         }
         
-        $scope.myFolderPage = rootUrl+"mysite/app/views/myfolder.html";
+        $scope.myFolderPage = rootUrl+"mysite/newguid/views/listfolder.html";
         
         $scope.getCVSFile = function(folder, count, pages, isExport){
             {
+                $scope.stillSearching = false;
                 $scope.currentFolder = folder;
                 $scope.currentCount = count;
                 $scope.showInBarSearch = false;
@@ -1141,6 +1252,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                                 JSONToCSVConvertor(angular.copy(msg), folder, true);
                             }
                             else {
+                                $scope.stillSearching = true;
                                 $scope.textResults = count+" contacts in "+folder+" folder!";
                                 if(pages === 0){
                                     $scope.currentIndex = 1;
@@ -1157,7 +1269,7 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                                 for (var i = 0; i < arrayLength; i++) {
                                     $scope.selectStatus[i] = true;
                                 }
-                                $scope.myFolderPage = rootUrl+"mysite/app/views/listexportcontact.html";
+                                $scope.myFolderPage = rootUrl+"mysite/newguid/views/listcontact.html";
                                 //$('#tableExample').DataTable();             
                                 if(pages===0){
                                     $scope.previousPaging = 'disabled';
@@ -2935,8 +3047,12 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
         }
         
         $scope.showCompanyPage = function(){
-            window.location.href = rootUrl+"mysite/app/updatecompany.php?name="+decodeURIComponent($scope.company['NAME']);
-        }        
+            window.location.href = rootUrl+"mysite/newguid/updatecompany.php?name="+decodeURIComponent($scope.company['NAME']);
+        }
+        
+        $scope.showContactUpdatePage = function(){
+            window.location.href = rootUrl+'mysite/newguid/updatecontact.php?info='+$scope.token+'_'+$scope.contactInfo['ID']+'_'+$scope.contactInfo['FIRSTNAME'].replace('?','')+'_'+$scope.contactInfo['LASTNAME'].replace('?','');
+        }
                 
         $scope.updateCompanyId = '';
         
@@ -2967,5 +3083,15 @@ myapp.controller('ContactCtrl', ['$scope', '$http', '$window', function ($scope,
                 initalAllEvent();
             }
         });
+                
+        $scope.mainSearchClick = function(evt){
+            if(getXY(evt)<54){
+                //$scope.searchPress(0,true,'',$scope.mainSearch);
+                if($scope.searchHistory)
+                        $scope.searchPress(0,true,'',$scope.mainSearch);      
+                    else
+                        $scope.gotoMainPage();
+            }            
+        }
         
     }]);

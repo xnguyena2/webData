@@ -15,6 +15,7 @@ if ($dataBaseManager->connectSucessDataBase) {
     $jobTitle = mysqli_real_escape_string($dataBaseManager->conn, filter_input(INPUT_POST, 'jobTitle'));
     $email = mysqli_real_escape_string($dataBaseManager->conn, filter_input(INPUT_POST, 'email'));
     $userEmail = mysqli_real_escape_string($dataBaseManager->conn, filter_input(INPUT_POST, 'userEmail'));
-    $dataBaseManager->updateContact($id, $firstName, $lastName, $jobTitle, $email, $userEmail);
+    $company = mysqli_real_escape_string($dataBaseManager->conn, filter_input(INPUT_POST, 'company'));
+    $dataBaseManager->updateContact($id, $firstName, $lastName, $jobTitle, $email, $userEmail, $company);
 }
 ?>
